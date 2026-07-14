@@ -242,8 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             // Determine backend URL based on environment
             const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-            // TODO: Once deployed to Render, paste your Render URL below:
-            const PRODUCTION_BACKEND_URL = 'https://your-backend-app.onrender.com';
+            const PRODUCTION_BACKEND_URL = 'https://kutubxona-backend-python.onrender.com';
             const BACKEND_URL = isLocalhost ? 'http://localhost:8000' : PRODUCTION_BACKEND_URL;
 
             const response = await fetch(`${BACKEND_URL}/api/chat`, {
