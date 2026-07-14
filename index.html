@@ -85,8 +85,9 @@
                 <div class="history-section">
                     <h4 data-i18n="langLearning">Language Learning</h4>
                     <ul class="history-list">
-                        <li><i class="fa-solid fa-language"></i> <span data-i18n="englishBooks">English Textbooks</span></li>
-                        <li><i class="fa-solid fa-language"></i> <span data-i18n="russianBooks">Russian Literature</span></li>
+                        <li><i class="fa-solid fa-language"></i> <span data-i18n="englishBooks">English</span></li>
+                        <li><i class="fa-solid fa-language"></i> <span data-i18n="frenchBooks">French</span></li>
+                        <li><i class="fa-solid fa-language"></i> <span data-i18n="chineseBooks">Chinese</span></li>
                     </ul>
                 </div>
             </div>
@@ -145,6 +146,25 @@
                 <div class="footer-note" data-i18n="footerNote">Kutubxona AI is an educational assistant and its advice should be supplemented with official exam guidelines.</div>
             </div>
         </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal-overlay hidden">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 data-i18n="settings">Settings</h3>
+                <button id="closeSettingsBtn" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-item">
+                    <span data-i18n="themeToggle">Dark Mode</span>
+                    <label class="switch">
+                        <input type="checkbox" id="themeToggleBtn">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
     </div>
     
     <script src="app.js"></script>

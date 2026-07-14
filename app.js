@@ -12,8 +12,9 @@ const translations = {
         apSection: "AP Courses",
         ceqSection: "Cambridge CEQ",
         langLearning: "Language Learning",
-        englishBooks: "English Textbooks",
-        russianBooks: "Russian Literature",
+        englishBooks: "English",
+        frenchBooks: "French",
+        chineseBooks: "Chinese",
         settings: "Settings",
         libraryAssistant: "Educational Assistant",
         online: "Online",
@@ -28,7 +29,8 @@ const translations = {
         chip3: "AP History summary",
         chip4: "Cambridge CEQ past papers",
         companyCredit: "KutubxonaAI Scientific Project developed by Smart Library LLC",
-        recentSearches: "Latest Searches"
+        recentSearches: "Latest Searches",
+        themeToggle: "Dark Mode"
     },
     uz: {
         landingTitle: "Kutubxona AI",
@@ -43,8 +45,9 @@ const translations = {
         apSection: "AP kurslari",
         ceqSection: "Cambridge CEQ",
         langLearning: "Til o'rganish",
-        englishBooks: "Ingliz tili darsliklari",
-        russianBooks: "Rus adabiyoti",
+        englishBooks: "Ingliz tili",
+        frenchBooks: "Fransuz tili",
+        chineseBooks: "Xitoy tili",
         settings: "Sozlamalar",
         libraryAssistant: "Ta'lim yordamchisi",
         online: "Onlayn",
@@ -59,7 +62,8 @@ const translations = {
         chip3: "AP Tarix xulosasi",
         chip4: "Cambridge CEQ o'tgan imtihon qog'ozlari",
         companyCredit: "\"Smart Library\" MCHJ tomonidan yaratilgan KutubxonaAI ilmiy loyihasi",
-        recentSearches: "So'nggi qidiruvlar"
+        recentSearches: "So'nggi qidiruvlar",
+        themeToggle: "Tungi rejim"
     },
     ru: {
         landingTitle: "Kutubxona AI",
@@ -74,8 +78,9 @@ const translations = {
         apSection: "Курсы AP",
         ceqSection: "Cambridge CEQ",
         langLearning: "Изучение языков",
-        englishBooks: "Учебники английского",
-        russianBooks: "Русская литература",
+        englishBooks: "Английский",
+        frenchBooks: "Французский",
+        chineseBooks: "Китайский",
         settings: "Настройки",
         libraryAssistant: "Образовательный помощник",
         online: "В сети",
@@ -90,7 +95,8 @@ const translations = {
         chip3: "Резюме истории AP",
         chip4: "Прошлые работы Cambridge CEQ",
         companyCredit: "Научный проект KutubxonaAI, разработанный ООО «Smart Library»",
-        recentSearches: "Последние поиски"
+        recentSearches: "Последние поиски",
+        themeToggle: "Темный режим"
     }
 };
 
@@ -328,6 +334,97 @@ document.addEventListener('DOMContentLoaded', () => {
     userInput.addEventListener('input', () => {
         sendBtn.disabled = userInput.value.trim().length === 0;
     });
+
+    // --- Theme Logic ---
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        if (themeToggleBtn) themeToggleBtn.checked = true;
+    }
+    
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                document.body.classList.add('light-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.remove('light-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    }
+
+    // --- Settings Modal Logic ---
+    const settingsBtn = document.querySelector('.settings-btn');
+    const settingsModal = document.getElementById('settingsModal');
+    const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+
+    if (settingsBtn && settingsModal) {
+        settingsBtn.addEventListener('click', () => {
+            settingsModal.classList.remove('hidden');
+        });
+    }
+
+    if (closeSettingsBtn) {
+        closeSettingsBtn.addEventListener('click', () => {
+            settingsModal.classList.add('hidden');
+        });
+    }
+
+    if (settingsModal) {
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) {
+                settingsModal.classList.add('hidden');
+            }
+        });
+    }
+
+    // --- New Session Button Logic ---
+    const newChatBtn = document.querySelector('.new-chat-btn');
+    if (newChatBtn) {
+        newChatBtn.addEventListener('click', () => {
+            // Clear all messages except the welcome message
+            const welcomeMessageHTML = `
+                <div class="message ai-message">
+                    <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                    <div class="message-content">
+                        <p data-i18n="welcomeMsg1">${translations[currentLang].welcomeMsg1}</p>
+                        <p data-i18n="welcomeMsg2">${translations[currentLang].welcomeMsg2}</p>
+                    </div>
+                </div>
+            `;
+            chatMessages.innerHTML = welcomeMessageHTML;
+            userInput.value = '';
+            userInput.focus();
+        });
+    }
+
+    // --- Sidebar Shortcuts Logic ---
+    document.querySelectorAll('.history-list li').forEach(li => {
+        // Skip the recent searches list which is handled elsewhere
+        if (li.closest('#recentSearchesList')) return;
+        
+        li.style.cursor = 'pointer'; // Ensure it looks clickable
+        li.addEventListener('click', () => {
+            const textSpan = li.querySelector('span');
+            if (textSpan && textSpan.innerText) {
+                userInput.value = textSpan.innerText;
+                chatForm.dispatchEvent(new Event('submit'));
+                // On mobile, close sidebar after clicking
+                document.querySelector('.sidebar').classList.remove('active');
+            }
+        });
+    });
+
+    // --- Search Button Logic ---
+    const searchBtn = document.querySelector('.icon-btn i.fa-magnifying-glass');
+    if (searchBtn && searchBtn.parentElement) {
+        searchBtn.parentElement.addEventListener('click', () => {
+            userInput.focus();
+        });
+    }
 
     // Initialize default language
     updateLanguage('uz');
