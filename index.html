@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kutubxona AI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js and Vanta.js for 3D background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+</head>
+<body>
+
+    <!-- Landing Page Overlay -->
+    <div id="landingPage" class="landing-page">
+        <!-- Vanta Background Container -->
+        <div id="vanta-bg"></div>
+        
+        <div class="landing-content">
+            <div class="lang-selector">
+                <button class="lang-btn active" data-lang="uz">UZ</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
+            </div>
+            
+            <div class="glass-card">
+                <div class="landing-logo">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h1 data-i18n="landingTitle">Kutubxona AI</h1>
+                <p data-i18n="landingSubtitle">Enter password to access the digital learning assistant.</p>
+                
+                <form id="loginForm" class="login-form">
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="passwordInput" placeholder="Password" data-i18n-placeholder="passwordPlaceholder" autocomplete="off">
+                    </div>
+                    <p id="errorMsg" class="error-msg" data-i18n="wrongPassword">Incorrect password</p>
+                    <button type="submit" class="primary-btn" data-i18n="enterBtn">Enter</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Company Credit Footer -->
+        <div class="landing-credit" data-i18n="companyCredit">
+            KutubxonaAI Scientific Project developed by Smart Library LLC
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="appContainer" class="app-container hidden">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Kutubxona AI</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-menu">
+                <button class="new-chat-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    <span data-i18n="newConversation">New Session</span>
+                </button>
+                
+                <div class="history-section">
+                    <h4 data-i18n="examPrep">Exam Prep</h4>
+                    <ul class="history-list">
+                        <li><i class="fa-solid fa-file-pen"></i> <span data-i18n="ieltsSection">IELTS Materials</span></li>
+                        <li><i class="fa-solid fa-calculator"></i> <span data-i18n="satSection">SAT Resources</span></li>
+                        <li><i class="fa-solid fa-book-bookmark"></i> <span data-i18n="apSection">AP Courses</span></li>
+                        <li><i class="fa-solid fa-certificate"></i> <span data-i18n="ceqSection">Cambridge CEQ</span></li>
+                    </ul>
+                </div>
+
+                <div class="history-section">
+                    <h4 data-i18n="langLearning">Language Learning</h4>
+                    <ul class="history-list">
+                        <li><i class="fa-solid fa-language"></i> <span data-i18n="englishBooks">English Textbooks</span></li>
+                        <li><i class="fa-solid fa-language"></i> <span data-i18n="russianBooks">Russian Literature</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <button class="settings-btn">
+                    <i class="fa-solid fa-gear"></i> <span data-i18n="settings">Settings</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-area">
+            <header class="chat-header">
+                <div class="header-info">
+                    <h2 data-i18n="libraryAssistant">Educational Assistant</h2>
+                    <span class="status"><i class="fa-solid fa-circle"></i> <span data-i18n="online">Online</span></span>
+                </div>
+                <div class="header-actions">
+                    <!-- Language selector for the second page -->
+                    <div class="header-lang">
+                        <button class="lang-btn active" data-lang="uz">UZ</button>
+                        <button class="lang-btn" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="ru">RU</button>
+                    </div>
+                    <button class="icon-btn" title="Search Books" data-i18n-title="searchCatalog"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button class="icon-btn" title="Student Profile" data-i18n-title="libraryAccount"><i class="fa-regular fa-user"></i></button>
+                </div>
+            </header>
+
+            <div class="chat-messages" id="chatMessages">
+                <!-- Welcome Message -->
+                <div class="message ai-message">
+                    <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                    <div class="message-content">
+                        <p data-i18n="welcomeMsg1">Xush kelibsiz! I am <strong>Kutubxona AI</strong>, your educational assistant.</p>
+                        <p data-i18n="welcomeMsg2">I can help you find books for language learning and prepare for exams such as IELTS, SAT, AP, and Cambridge CEQ.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <!-- Suggestion Chips -->
+                <div class="suggestion-chips" id="suggestionChips">
+                    <button class="chip" data-i18n="chip1">Find IELTS Speaking books</button>
+                    <button class="chip" data-i18n="chip2">SAT Math practice tests</button>
+                    <button class="chip" data-i18n="chip3">AP History summary</button>
+                    <button class="chip" data-i18n="chip4">Cambridge CEQ past papers</button>
+                </div>
+                
+                <form id="chatForm" class="chat-form">
+                    <button type="button" class="attachment-btn"><i class="fa-solid fa-paperclip"></i></button>
+                    <input type="text" id="userInput" placeholder="Ask about an exam, book, or topic..." data-i18n-placeholder="askPlaceholder" autocomplete="off">
+                    <button type="submit" class="send-btn" id="sendBtn" disabled><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+                <div class="footer-note" data-i18n="footerNote">Kutubxona AI is an educational assistant and its advice should be supplemented with official exam guidelines.</div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
