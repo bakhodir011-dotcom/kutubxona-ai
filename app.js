@@ -27,7 +27,8 @@ const translations = {
         chip2: "SAT Math practice tests",
         chip3: "AP History summary",
         chip4: "Cambridge CEQ past papers",
-        companyCredit: "KutubxonaAI Scientific Project developed by Smart Library LLC"
+        companyCredit: "KutubxonaAI Scientific Project developed by Smart Library LLC",
+        recentSearches: "Latest Searches"
     },
     uz: {
         landingTitle: "Kutubxona AI",
@@ -57,7 +58,8 @@ const translations = {
         chip2: "SAT Math amaliy testlari",
         chip3: "AP Tarix xulosasi",
         chip4: "Cambridge CEQ o'tgan imtihon qog'ozlari",
-        companyCredit: "\"Smart Library\" MCHJ tomonidan yaratilgan KutubxonaAI ilmiy loyihasi"
+        companyCredit: "\"Smart Library\" MCHJ tomonidan yaratilgan KutubxonaAI ilmiy loyihasi",
+        recentSearches: "So'nggi qidiruvlar"
     },
     ru: {
         landingTitle: "Kutubxona AI",
@@ -87,7 +89,8 @@ const translations = {
         chip2: "Практические тесты SAT Math",
         chip3: "Резюме истории AP",
         chip4: "Прошлые работы Cambridge CEQ",
-        companyCredit: "Научный проект KutubxonaAI, разработанный ООО «Smart Library»"
+        companyCredit: "Научный проект KutubxonaAI, разработанный ООО «Smart Library»",
+        recentSearches: "Последние поиски"
     }
 };
 
@@ -175,7 +178,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const userInput = document.getElementById('userInput');
     const chatMessages = document.getElementById('chatMessages');
     const sendBtn = document.getElementById('sendBtn');
+    const recentSearchesList = document.getElementById('recentSearchesList');
+    const recentSearchesSection = document.getElementById('recentSearchesSection');
     
+    // --- Recent Searches Logic ---
+    const MAX_RECENT_SEARCHES = 10;
+    
+    const renderRecentSearches = () => {
+        const searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+        if (searches.length === 0) {
+            recentSearchesSection.style.display = 'none';
+            return;
+        }
+        
+        recentSearchesSection.style.display = 'block';
+        recentSearchesList.innerHTML = '';
+        
+        searches.forEach(search => {
+            const li = document.createElement('li');
+            li.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> <span>${search}</span>`;
+            li.addEventListener('click', () => {
+                userInput.value = search;
+                // Automatically send the message
+                chatForm.dispatchEvent(new Event('submit'));
+            });
+            recentSearchesList.appendChild(li);
+        });
+    };
+    
+    const saveRecentSearch = (text) => {
+        let searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+        // Remove if already exists to move it to the top
+        searches = searches.filter(s => s !== text);
+        searches.unshift(text);
+        if (searches.length > MAX_RECENT_SEARCHES) {
+            searches.pop();
+        }
+        localStorage.setItem('recentSearches', JSON.stringify(searches));
+        renderRecentSearches();
+    };
+    
+    // Initialize
+    renderRecentSearches();    
     // Suggestion Chips Click Handler
     document.querySelectorAll('.chip').forEach(chip => {
         chip.addEventListener('click', (e) => {
@@ -225,6 +269,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const text = userInput.value.trim();
         if (!text) return;
+        
+        saveRecentSearch(text);
         
         userInput.value = '';
         userInput.disabled = true;
