@@ -104,8 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLang = 'uz';
 
     // --- 3D Background Init ---
+    let vantaEffect = null;
     if (typeof VANTA !== 'undefined') {
-        VANTA.NET({
+        vantaEffect = VANTA.NET({
             el: "#vanta-bg",
             mouseControls: true,
             touchControls: true,
@@ -165,7 +166,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pwd === 'kutubxona2026') {
             errorMsg.style.display = 'none';
             landingPage.classList.add('fade-out');
+            if (vantaEffect) vantaEffect.destroy();
             setTimeout(() => {
+                landingPage.style.display = 'none';
                 appContainer.classList.remove('hidden');
                 document.getElementById('userInput').focus();
             }, 500);
@@ -226,15 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize
     renderRecentSearches();    
-    // Suggestion Chips Click Handler
-    document.querySelectorAll('.chip').forEach(chip => {
-        chip.addEventListener('click', (e) => {
-            userInput.value = e.target.textContent;
-            sendBtn.disabled = false;
-            // trigger submit
-            chatForm.dispatchEvent(new Event('submit'));
-        });
-    });
+
 
     const createMessageElement = (content, isUser = false) => {
         const messageDiv = document.createElement('div');
@@ -281,7 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
         userInput.value = '';
         userInput.disabled = true;
         sendBtn.disabled = true;
-        document.querySelectorAll('.chip').forEach(c => c.style.pointerEvents = 'none');
         
         const userMsg = createMessageElement(text, true);
         chatMessages.appendChild(userMsg);
@@ -327,7 +321,6 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollToBottom();
         userInput.disabled = false;
         sendBtn.disabled = false;
-        document.querySelectorAll('.chip').forEach(c => c.style.pointerEvents = 'auto');
         userInput.focus();
     });
 

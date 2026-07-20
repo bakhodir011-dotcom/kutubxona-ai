@@ -42,7 +42,7 @@ class ChatResponse(BaseModel):
 async def chat_endpoint(request: ChatRequest):
     try:
         # Generate response using Gemini
-        response = model.generate_content(request.message)
+        response = await model.generate_content_async(request.message)
         return ChatResponse(response=response.text)
     except Exception as e:
         print(f"Error generating content: {e}")
