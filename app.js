@@ -167,9 +167,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnTryGovernor = document.getElementById('btnTryGovernor');
     const closeLoginBtn = document.getElementById('closeLoginBtn');
     const loginModal = document.getElementById('loginModal');
+    const landingPage = document.getElementById('landingPage');
 
     const openLoginModal = () => {
         loginModal.classList.remove('hidden');
+        landingPage.style.display = 'none';
         if (vantaEffect) vantaEffect.resize();
         document.getElementById('passwordInput').focus();
     };
@@ -181,13 +183,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeLoginBtn.addEventListener('click', () => {
         loginModal.classList.add('hidden');
+        landingPage.style.display = 'block';
     });
 
     // --- Authentication Logic ---
     const loginForm = document.getElementById('loginForm');
     const passwordInput = document.getElementById('passwordInput');
     const errorMsg = document.getElementById('errorMsg');
-    const landingPage = document.getElementById('landingPage');
     const appContainer = document.getElementById('appContainer');
 
     loginForm.addEventListener('submit', (e) => {
