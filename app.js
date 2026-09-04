@@ -413,7 +413,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (data.error) throw new Error(data.error);
                         if (data.text) {
                             fullText += data.text;
-                            msgContent.innerHTML = fullText.replace(/\n/g, '<br>');
+                            let formattedText = fullText
+                                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                .replace(/(?:^|\n)\*\s/g, '\n• ')
+                                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                                .replace(/\n/g, '<br>');
+                            msgContent.innerHTML = formattedText;
                             scrollToBottom();
                         }
                     }
