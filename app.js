@@ -189,8 +189,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Authentication Logic ---
     const loginForm = document.getElementById('loginForm');
     const passwordInput = document.getElementById('passwordInput');
+    const togglePasswordBtn = document.getElementById('togglePasswordBtn');
     const errorMsg = document.getElementById('errorMsg');
     const appContainer = document.getElementById('appContainer');
+
+    togglePasswordBtn.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        togglePasswordBtn.innerHTML = type === 'password' ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
+    });
 
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();

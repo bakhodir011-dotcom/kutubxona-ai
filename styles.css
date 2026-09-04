@@ -807,13 +807,39 @@ body {
     width: 100%;
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid var(--border-color);
-    padding: 14px 16px 14px 45px;
+    padding: 14px 45px 14px 45px;
     border-radius: var(--border-radius-md);
-    color: var(--text-main);
+    color: #ffffff;
     font-family: inherit;
     font-size: 1rem;
     outline: none;
     transition: all 0.3s ease;
+}
+
+.input-group input:-webkit-autofill,
+.input-group input:-webkit-autofill:hover,
+.input-group input:-webkit-autofill:focus,
+.input-group input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #18181b inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 16px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.toggle-password:hover {
+    color: white;
 }
 
 .input-group input:focus {
