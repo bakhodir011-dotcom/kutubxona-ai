@@ -590,19 +590,116 @@ body {
     overflow-x: hidden;
 }
 
-.landing-hero {
-    position: relative;
+/* --- NAVIGATION HEADER --- */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    transition: background 0.3s ease, padding 0.3s ease;
+    /* Create a gradient overlay behind the header like in the mockup */
+    background: linear-gradient(180deg, rgba(5, 38, 21, 0.9) 0%, rgba(5, 38, 21, 0) 100%);
+}
+.site-header.scrolled {
+    background: var(--bg-main);
+    padding: 15px 60px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+}
+.header-logo i {
+    font-size: 2rem;
+    color: var(--accent);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+.nav-links a:hover {
+    color: var(--accent);
+}
+.btn-try {
+    background-color: var(--accent);
+    color: var(--bg-main);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.btn-try:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    background-color: #10b981; /* Lighter emerald */
+}
+
+/* --- LOGIN MODAL --- */
+.login-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 9999;
+    background-color: var(--bg-main);
+    transition: opacity 0.4s ease, visibility 0.4s;
 }
-
-.landing-page.fade-out {
+.login-modal.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.landing-page.fade-out, .login-modal.fade-out {
     opacity: 0;
     transform: scale(1.05);
     pointer-events: none;
+}
+.close-modal-btn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 10;
+}
+.close-modal-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 #vanta-bg {

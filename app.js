@@ -153,6 +153,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- Navigation Logic ---
+    const siteHeader = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            siteHeader.classList.add('scrolled');
+        } else {
+            siteHeader.classList.remove('scrolled');
+        }
+    });
+
+    const openLoginBtn = document.getElementById('openLoginBtn');
+    const closeLoginBtn = document.getElementById('closeLoginBtn');
+    const loginModal = document.getElementById('loginModal');
+
+    openLoginBtn.addEventListener('click', () => {
+        loginModal.classList.remove('hidden');
+        if (vantaEffect) vantaEffect.resize();
+        document.getElementById('passwordInput').focus();
+    });
+
+    closeLoginBtn.addEventListener('click', () => {
+        loginModal.classList.add('hidden');
+    });
+
     // --- Authentication Logic ---
     const loginForm = document.getElementById('loginForm');
     const passwordInput = document.getElementById('passwordInput');
@@ -165,9 +189,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const pwd = passwordInput.value;
         if (pwd === 'kutubxona2026') {
             errorMsg.style.display = 'none';
+            loginModal.classList.add('fade-out');
             landingPage.classList.add('fade-out');
             if (vantaEffect) vantaEffect.destroy();
             setTimeout(() => {
+                loginModal.style.display = 'none';
                 landingPage.style.display = 'none';
                 appContainer.classList.remove('hidden');
                 document.getElementById('userInput').focus();

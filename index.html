@@ -13,41 +13,27 @@
 </head>
 <body>
 
-    <!-- Landing Page Overlay -->
+    <!-- Main Landing Page -->
     <div id="landingPage" class="landing-page">
-        <!-- Hero Section -->
-        <section class="landing-hero">
-            <!-- Vanta Background Container -->
-            <div id="vanta-bg"></div>
-            
-            <div class="landing-content">
-                <div class="lang-selector">
-                    <button class="lang-btn active" data-lang="uz">UZ</button>
-                    <button class="lang-btn" data-lang="en">EN</button>
-                    <button class="lang-btn" data-lang="ru">RU</button>
+        <!-- Navigation Header -->
+        <header class="site-header">
+            <div class="header-container">
+                <div class="header-logo">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Kutubxona AI</span>
                 </div>
-                
-                <div class="glass-card">
-                    <div class="landing-logo">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                    </div>
-                    <h1 data-i18n="landingTitle">Kutubxona AI</h1>
-                    <p data-i18n="landingSubtitle">Enter password to access the digital learning assistant.</p>
-                    
-                    <form id="loginForm" class="login-form">
-                        <div class="input-group">
-                            <i class="fa-solid fa-lock"></i>
-                            <input type="password" id="passwordInput" placeholder="Password" data-i18n-placeholder="passwordPlaceholder" autocomplete="off">
-                        </div>
-                        <p id="errorMsg" class="error-msg" data-i18n="wrongPassword">Incorrect password</p>
-                        <button type="submit" class="primary-btn" data-i18n="enterBtn">Enter</button>
-                    </form>
-                </div>
+                <nav class="nav-links">
+                    <a href="#governorSection">Home</a>
+                    <a href="#missionSection">Our Mission</a>
+                    <a href="#teamSection">Our Team</a>
+                    <a href="#contactSection">Contact</a>
+                    <button class="btn-try" id="openLoginBtn">Try Kutubxona AI</button>
+                </nav>
             </div>
-        </section>
+        </header>
 
-        <!-- New Section 1: Governor -->
-        <section class="landing-section governor-section">
+        <!-- Section 1: Governor -->
+        <section id="governorSection" class="landing-section governor-section">
             <div class="container">
                 <div class="gov-header">
                     <p class="gov-subtitle">A STEP TOWARDS A SMARTER SAMARKAND</p>
@@ -101,7 +87,7 @@
         </section>
 
         <!-- New Section 2: Team -->
-        <section class="landing-section team-section">
+        <section id="teamSection" class="landing-section team-section">
             <div class="container">
                 <div class="team-header">
                     <p class="team-subtitle">OUR TEAM</p>
@@ -201,6 +187,38 @@
         <!-- Company Credit Footer -->
         <div class="landing-credit" data-i18n="companyCredit">
             KutubxonaAI Scientific Project developed by Smart Library LLC
+        </div>
+    </div>
+
+    <!-- Login Modal Overlay -->
+    <div id="loginModal" class="login-modal hidden">
+        <!-- Vanta Background Container -->
+        <div id="vanta-bg"></div>
+        
+        <div class="landing-content">
+            <div class="lang-selector">
+                <button class="lang-btn active" data-lang="uz">UZ</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
+            </div>
+            
+            <div class="glass-card">
+                <div class="landing-logo">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h1 data-i18n="landingTitle">Kutubxona AI</h1>
+                <p data-i18n="landingSubtitle">Enter password to access the digital learning assistant.</p>
+                
+                <form id="loginForm" class="login-form">
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="passwordInput" placeholder="Password" data-i18n-placeholder="passwordPlaceholder" autocomplete="off">
+                    </div>
+                    <p id="errorMsg" class="error-msg" data-i18n="wrongPassword">Incorrect password</p>
+                    <button type="submit" class="primary-btn" data-i18n="enterBtn">Enter</button>
+                </form>
+            </div>
+            <button class="close-modal-btn" id="closeLoginBtn"><i class="fa-solid fa-xmark"></i></button>
         </div>
     </div>
 
