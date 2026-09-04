@@ -1,5 +1,13 @@
 const translations = {
     en: {
+        navHome: "Home",
+        navMission: "Our Mission",
+        navTeam: "Our Team",
+        navContact: "Contact",
+        navTryBtn: "Try Kutubxona AI",
+        missionTitle: "Our Mission",
+        missionSubtitle: "Creating a national AI for the Students of Uzbekistan.",
+        missionDesc: "We believe every student deserves access to world-class educational tools. Our AI is tailored specifically for the linguistic, cultural, and academic needs of Uzbekistan, fostering a new generation of bright, tech-savvy leaders. We are building the foundational infrastructure to make high-quality, personalized learning accessible to every child, anywhere, anytime.",
         landingTitle: "Kutubxona AI",
         landingSubtitle: "Enter password to access the digital learning assistant.",
         passwordPlaceholder: "Password",
@@ -33,6 +41,14 @@ const translations = {
         themeToggle: "Dark Mode"
     },
     uz: {
+        navHome: "Bosh sahifa",
+        navMission: "Bizning maqsadimiz",
+        navTeam: "Bizning jamoa",
+        navContact: "Aloqa",
+        navTryBtn: "Kutubxona AI'ni sinab ko'rish",
+        missionTitle: "Bizning maqsadimiz",
+        missionSubtitle: "O'zbekiston talabalari uchun milliy sun'iy intellektni yaratish.",
+        missionDesc: "Biz har bir talaba jahon andozalari darajasidagi ta'lim vositalaridan foydalanish huquqiga ega deb hisoblaymiz. Bizning sun'iy intellektimiz O'zbekistonning lingvistik, madaniy va akademik ehtiyojlari uchun maxsus moslashtirilgan bo'lib, yorqin, texnologiyalardan xabardor yetakchilarning yangi avlodini shakllantiradi. Biz yuqori sifatli, shaxsiylashtirilgan ta'limni har bir bola uchun, istalgan joyda, istalgan vaqtda ochiq qilish uchun asosiy infratuzilmani qurmoqdamiz.",
         landingTitle: "Kutubxona AI",
         landingSubtitle: "Ta'lim yordamchisiga kirish uchun parolni kiriting.",
         passwordPlaceholder: "Parol",
@@ -66,6 +82,14 @@ const translations = {
         themeToggle: "Tungi rejim"
     },
     ru: {
+        navHome: "Главная",
+        navMission: "Наша миссия",
+        navTeam: "Наша команда",
+        navContact: "Контакты",
+        navTryBtn: "Попробовать Kutubxona AI",
+        missionTitle: "Наша миссия",
+        missionSubtitle: "Создание национального ИИ для студентов Узбекистана.",
+        missionDesc: "Мы верим, что каждый студент заслуживает доступа к образовательным инструментам мирового класса. Наш ИИ адаптирован специально для лингвистических, культурных и академических потребностей Узбекистана, способствуя развитию нового поколения ярких, технически подкованных лидеров. Мы строим базовую инфраструктуру, чтобы сделать качественное, персонализированное обучение доступным каждому ребенку, где угодно и когда угодно.",
         landingTitle: "Kutubxona AI",
         landingSubtitle: "Введите пароль для доступа к образовательному помощнику.",
         passwordPlaceholder: "Пароль",
