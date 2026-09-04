@@ -722,38 +722,33 @@ body {
     perspective: 1000px;
 }
 
-.lang-selector {
-    position: absolute;
-    top: -60px;
-    right: 20px;
+/* --- LANGUAGE SELECTOR --- */
+.header-lang {
     display: flex;
     gap: 8px;
-    background: rgba(24, 24, 27, 0.6);
-    backdrop-filter: blur(8px);
-    padding: 6px;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
+    align-items: center;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    padding-left: 20px;
 }
-
 .lang-btn {
     background: transparent;
-    border: none;
-    color: var(--text-muted);
-    padding: 6px 12px;
-    border-radius: 14px;
-    font-size: 0.8rem;
+    border: 1px solid transparent;
+    color: #a1a1aa;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s;
 }
 
 .lang-btn:hover {
-    color: var(--text-main);
+    color: white;
 }
 
 .lang-btn.active {
-    background: var(--accent);
-    color: var(--bg-main);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
 }
 
 .glass-card {
