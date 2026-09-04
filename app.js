@@ -288,7 +288,8 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             // Determine backend URL based on environment
             const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-            const PRODUCTION_BACKEND_URL = 'https://kutubxona-backend-python.onrender.com';
+            // Vercel Serverless Functions serve from the same domain
+            const PRODUCTION_BACKEND_URL = '';
             const BACKEND_URL = isLocalhost ? 'http://localhost:8000' : PRODUCTION_BACKEND_URL;
 
             const response = await fetch(`${BACKEND_URL}/api/chat`, {
@@ -301,19 +302,43 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (!response.ok) throw new Error('Network response was not ok');
             
-            const data = await response.json();
-            
             chatMessages.removeChild(typingMsg);
-            
-            // Render markdown or text
-            const aiResponseText = data.response.replace(/\n/g, '<br>'); // Simple line break handling
-            
-            const aiMsg = createMessageElement(aiResponseText, false);
+            const aiMsg = createMessageElement('', false);
             chatMessages.appendChild(aiMsg);
+            const msgContent = aiMsg.querySelector('.message-content p');
+            
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let fullText = "";
+            let buffer = "";
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                
+                buffer += decoder.decode(value, { stream: true });
+                let newlineIndex;
+                while ((newlineIndex = buffer.indexOf('\n\n')) !== -1) {
+                    const eventString = buffer.slice(0, newlineIndex);
+                    buffer = buffer.slice(newlineIndex + 2);
+                    
+                    if (eventString.startsWith('data: ')) {
+                        const data = JSON.parse(eventString.slice(6));
+                        if (data.error) throw new Error(data.error);
+                        if (data.text) {
+                            fullText += data.text;
+                            msgContent.innerHTML = fullText.replace(/\n/g, '<br>');
+                            scrollToBottom();
+                        }
+                    }
+                }
+            }
             
         } catch (error) {
             console.error('Error fetching AI response:', error);
-            chatMessages.removeChild(typingMsg);
+            if (chatMessages.contains(typingMsg)) {
+                chatMessages.removeChild(typingMsg);
+            }
             const errorMsg = createMessageElement('Kechirasiz, tizimga ulanishda xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko\'ring.', false);
             chatMessages.appendChild(errorMsg);
         }

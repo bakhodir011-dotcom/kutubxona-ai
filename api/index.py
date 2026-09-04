@@ -1,4 +1,6 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import StreamingResponse
+import json
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import google.generativeai as genai
@@ -38,15 +40,19 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     response: str
 
-@app.post("/api/chat", response_model=ChatResponse)
+@app.post("/api/chat")
 async def chat_endpoint(request: ChatRequest):
-    try:
-        # Generate response using Gemini
-        response = await model.generate_content_async(request.message)
-        return ChatResponse(response=response.text)
-    except Exception as e:
-        print(f"Error generating content: {e}")
-        raise HTTPException(status_code=500, detail="Failed to communicate with AI model")
+    async def generate():
+        try:
+            response = await model.generate_content_async(request.message, stream=True)
+            async for chunk in response:
+                if chunk.text:
+                    yield f"data: {json.dumps({'text': chunk.text})}\n\n"
+        except Exception as e:
+            print(f"Error generating content: {e}")
+            yield f"data: {json.dumps({'error': 'Failed to communicate with AI model'})}\n\n"
+            
+    return StreamingResponse(generate(), media_type="text/event-stream")
 
 if __name__ == "__main__":
     import uvicorn
