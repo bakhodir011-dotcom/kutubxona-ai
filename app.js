@@ -164,14 +164,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const openLoginBtn = document.getElementById('openLoginBtn');
+    const btnTryGovernor = document.getElementById('btnTryGovernor');
     const closeLoginBtn = document.getElementById('closeLoginBtn');
     const loginModal = document.getElementById('loginModal');
 
-    openLoginBtn.addEventListener('click', () => {
+    const openLoginModal = () => {
         loginModal.classList.remove('hidden');
         if (vantaEffect) vantaEffect.resize();
         document.getElementById('passwordInput').focus();
-    });
+    };
+
+    openLoginBtn.addEventListener('click', openLoginModal);
+    if (btnTryGovernor) {
+        btnTryGovernor.addEventListener('click', openLoginModal);
+    }
 
     closeLoginBtn.addEventListener('click', () => {
         loginModal.classList.add('hidden');
