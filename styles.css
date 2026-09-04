@@ -56,8 +56,8 @@ body {
     font-family: 'Outfit', sans-serif;
     background-color: var(--bg-main);
     color: var(--text-main);
-    height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* Scrollbar styling */
