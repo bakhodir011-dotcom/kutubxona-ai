@@ -15,34 +15,188 @@
 
     <!-- Landing Page Overlay -->
     <div id="landingPage" class="landing-page">
-        <!-- Vanta Background Container -->
-        <div id="vanta-bg"></div>
-        
-        <div class="landing-content">
-            <div class="lang-selector">
-                <button class="lang-btn active" data-lang="uz">UZ</button>
-                <button class="lang-btn" data-lang="en">EN</button>
-                <button class="lang-btn" data-lang="ru">RU</button>
-            </div>
+        <!-- Hero Section -->
+        <section class="landing-hero">
+            <!-- Vanta Background Container -->
+            <div id="vanta-bg"></div>
             
-            <div class="glass-card">
-                <div class="landing-logo">
-                    <i class="fa-solid fa-graduation-cap"></i>
+            <div class="landing-content">
+                <div class="lang-selector">
+                    <button class="lang-btn active" data-lang="uz">UZ</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ru">RU</button>
                 </div>
-                <h1 data-i18n="landingTitle">Kutubxona AI</h1>
-                <p data-i18n="landingSubtitle">Enter password to access the digital learning assistant.</p>
                 
-                <form id="loginForm" class="login-form">
-                    <div class="input-group">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" id="passwordInput" placeholder="Password" data-i18n-placeholder="passwordPlaceholder" autocomplete="off">
+                <div class="glass-card">
+                    <div class="landing-logo">
+                        <i class="fa-solid fa-graduation-cap"></i>
                     </div>
-                    <p id="errorMsg" class="error-msg" data-i18n="wrongPassword">Incorrect password</p>
-                    <button type="submit" class="primary-btn" data-i18n="enterBtn">Enter</button>
-                </form>
+                    <h1 data-i18n="landingTitle">Kutubxona AI</h1>
+                    <p data-i18n="landingSubtitle">Enter password to access the digital learning assistant.</p>
+                    
+                    <form id="loginForm" class="login-form">
+                        <div class="input-group">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="passwordInput" placeholder="Password" data-i18n-placeholder="passwordPlaceholder" autocomplete="off">
+                        </div>
+                        <p id="errorMsg" class="error-msg" data-i18n="wrongPassword">Incorrect password</p>
+                        <button type="submit" class="primary-btn" data-i18n="enterBtn">Enter</button>
+                    </form>
+                </div>
             </div>
-        </div>
-        
+        </section>
+
+        <!-- New Section 1: Governor -->
+        <section class="landing-section governor-section">
+            <div class="container">
+                <div class="gov-header">
+                    <p class="gov-subtitle">A STEP TOWARDS A SMARTER SAMARKAND</p>
+                    <h2 class="gov-title">Meeting with<br><span class="highlight">Adiz Boboyev</span></h2>
+                    <p class="gov-role">Governor of Samarkand Region</p>
+                    <p class="gov-desc">We had the honor of presenting Kutubxona AI to Mr. Adiz Boboyev, Governor of Samarkand Region, sharing our vision for how artificial intelligence can expand access to quality education and create new opportunities for the youth of our region.</p>
+                </div>
+                
+                <div class="gov-gallery">
+                    <div class="gov-img main-img"><img src="https://placehold.co/800x500/0a2e1f/FFF?text=Governor+Meeting+1" alt="Governor Meeting 1"></div>
+                    <div class="gov-img sub-img1"><img src="https://placehold.co/400x300/0a2e1f/FFF?text=Meeting+2" alt="Meeting 2"></div>
+                    <div class="gov-img sub-img2"><img src="https://placehold.co/400x300/0a2e1f/FFF?text=Meeting+3" alt="Meeting 3"></div>
+                </div>
+
+                <div class="gov-footer">
+                    <div class="gov-quote">
+                        <i class="fa-solid fa-quote-left"></i>
+                        <p>“Investing <span class="highlight">in education</span> and innovative technologies is an investment in the future of our youth and our region.”</p>
+                        <div class="quote-author">
+                            <strong>Adiz Boboyev</strong><br>Governor of Samarkand Region
+                        </div>
+                    </div>
+                    <div class="gov-stats">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                            <p>Greater opportunities<br>for students</p>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                            <p>A more innovative<br>and competitive region</p>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div>
+                            <p>Strong collaboration<br>for a brighter future</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gov-cta">
+                    <div class="cta-text">
+                        <h3>Kutubxona AI<br>Opening knowledge <span class="highlight">to everyone</span></h3>
+                        <p>We are committed to developing AI-powered educational solutions that support students, teachers, and lifelong learners in Samarkand and beyond.</p>
+                    </div>
+                    <div class="cta-action">
+                        <div class="cta-signature">More<br>Knowledge<br>Brighter<br>Futures</div>
+                        <button class="learn-more-btn">Learn More <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Section 2: Team -->
+        <section class="landing-section team-section">
+            <div class="container">
+                <div class="team-header">
+                    <p class="team-subtitle">OUR TEAM</p>
+                    <h2 class="team-title">People Behind <span class="highlight">Kutubxona AI</span></h2>
+                    <p class="team-desc">A team of educators, innovators, and global thinkers working together to make high-quality education accessible to everyone through AI.</p>
+                </div>
+                
+                <div class="team-grid">
+                    <!-- Co-founder 1 -->
+                    <div class="team-card">
+                        <div class="card-img-wrapper"><img src="https://placehold.co/300x400/103a28/FFF?text=Behruz+Xasanov" alt="Behruz Xasanov"></div>
+                        <div class="card-info">
+                            <h3>Behruz Xasanov</h3>
+                            <p class="role">CTO & Co-founder</p>
+                            <p class="desc">Leads the technical vision and development of Kutubxona AI, building scalable and innovative solutions for modern education.</p>
+                            <div class="card-quote">
+                                <i class="fa-solid fa-quote-left"></i>
+                                <p>"Technology creates opportunities when it serves people."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Co-founder 2 -->
+                    <div class="team-card">
+                        <div class="card-img-wrapper"><img src="https://placehold.co/300x400/103a28/FFF?text=Asadbek+Ilhomjonov" alt="Asadbek Ilhomjonov"></div>
+                        <div class="card-info">
+                            <h3>Asadbek Ilhomjonov</h3>
+                            <p class="role">CDO & Co-founder</p>
+                            <p class="desc">Drives product strategy, data innovation, and digital growth, making Kutubxona AI a smarter and more personalized learning platform.</p>
+                            <div class="card-quote">
+                                <i class="fa-solid fa-quote-left"></i>
+                                <p>"Great education becomes truly powerful when it is powered by the right data."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Co-founder 3 -->
+                    <div class="team-card">
+                        <div class="card-img-wrapper"><img src="https://placehold.co/300x400/103a28/FFF?text=Muhammadxon+Soliev" alt="Muhammadxon Soliev"></div>
+                        <div class="card-info">
+                            <h3>Muhammadxon Soliev</h3>
+                            <p class="role">CEO & Co-founder</p>
+                            <p class="desc">Provides strategic leadership and oversees the mission, growth, and impact of Kutubxona AI, with a strong commitment to accessible, high-quality education.</p>
+                            <div class="card-quote">
+                                <i class="fa-solid fa-quote-left"></i>
+                                <p>"Education has the power to change lives, and we are here to make that opportunity available to everyone."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Co-founder 4 -->
+                    <div class="team-card">
+                        <div class="card-img-wrapper"><img src="https://placehold.co/300x400/103a28/FFF?text=Vincent+Roosa" alt="Vincent Roosa"></div>
+                        <div class="card-info">
+                            <h3>Vincent Roosa</h3>
+                            <p class="role">CDO & Co-founder <span class="flag">🇺🇸</span></p>
+                            <p class="desc">Brings global perspective and international experience, helping to shape the data strategy and educational standards of Kutubxona AI.</p>
+                            <div class="card-quote">
+                                <i class="fa-solid fa-quote-left"></i>
+                                <p>"I'm excited to be part of a mission that uses AI to make world-class education accessible to learners everywhere."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Co-founder 5 -->
+                    <div class="team-card">
+                        <div class="card-img-wrapper"><img src="https://placehold.co/300x400/103a28/FFF?text=Bahodir+Xurramov" alt="Bahodir Xurramov"></div>
+                        <div class="card-info">
+                            <h3>Bahodir Xurramov</h3>
+                            <p class="role">CTO & Co-founder</p>
+                            <p class="desc">Focuses on system architecture, content infrastructure, and technical development, helping to bring the best knowledge resources to students through AI.</p>
+                            <div class="card-quote">
+                                <i class="fa-solid fa-quote-left"></i>
+                                <p>"Knowledge should be a right, not a privilege. We build technology to make learning simpler, smarter, and more inclusive."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-footer">
+                    <div class="tf-item">
+                        <div class="tf-icon"><i class="fa-solid fa-users"></i></div>
+                        <div><strong>5</strong><br><span>Co-founders</span></div>
+                    </div>
+                    <div class="tf-item">
+                        <div class="tf-icon"><i class="fa-solid fa-globe"></i></div>
+                        <div><strong>2</strong><br><span>Countries</span></div>
+                    </div>
+                    <div class="tf-item">
+                        <div class="tf-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <div><strong>1</strong> Shared Mission<br><span>Accessible, high-quality education for everyone</span></div>
+                    </div>
+                    <div class="tf-item">
+                        <div class="tf-icon"><i class="fa-solid fa-heart"></i></div>
+                        <div><strong>A Brighter Future</strong><br><span>Through AI and Education</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Company Credit Footer -->
         <div class="landing-credit" data-i18n="companyCredit">
             KutubxonaAI Scientific Project developed by Smart Library LLC
