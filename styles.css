@@ -720,9 +720,8 @@ body {
     padding: 20px;
     perspective: 1000px;
 }
-
 /* --- LANGUAGE SELECTOR --- */
-.header-lang {
+.landing-lang {
     display: flex;
     gap: 8px;
     align-items: center;
