@@ -585,7 +585,7 @@ body {
     min-height: 100vh;
     z-index: 100;
     display: block;
-    background-color: var(--bg-main);
+    background-color: transparent;
     transition: opacity 0.8s ease, transform 0.8s ease;
     overflow-x: hidden;
 }
@@ -667,7 +667,8 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 9999;
-    background-color: var(--bg-main);
+    background-color: rgba(5, 38, 21, 0.90);
+    backdrop-filter: blur(8px);
     transition: opacity 0.4s ease, visibility 0.4s;
 }
 .login-modal.hidden {
@@ -703,11 +704,11 @@ body {
 }
 
 #vanta-bg {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: -1;
     background-color: var(--bg-main);
 }
@@ -987,7 +988,8 @@ input:checked + .slider:before {
 
 /* Governor Section */
 .governor-section {
-    background: linear-gradient(135deg, #093b21 0%, #052615 100%);
+    padding-top: 120px;
+    background: linear-gradient(135deg, rgba(9, 59, 33, 0.75) 0%, rgba(5, 38, 21, 0.75) 100%);
 }
 .gov-header {
     margin-bottom: 40px;
@@ -1021,7 +1023,7 @@ input:checked + .slider:before {
 .gov-gallery {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 500px 250px;
+    grid-template-rows: 400px 200px;
     gap: 20px;
     margin-bottom: 50px;
 }
@@ -1161,7 +1163,7 @@ input:checked + .slider:before {
 
 /* Team Section */
 .team-section {
-    background: linear-gradient(180deg, #052615 0%, #031c0e 100%);
+    background: linear-gradient(180deg, rgba(5, 38, 21, 0.75) 0%, rgba(3, 28, 14, 0.75) 100%);
     padding-bottom: 100px;
 }
 .team-header {
@@ -1189,8 +1191,8 @@ input:checked + .slider:before {
 
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
     margin-bottom: 60px;
 }
 .team-card {
