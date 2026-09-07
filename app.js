@@ -316,12 +316,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const recentSearchesList = document.getElementById('recentSearchesList');
     const recentSearchesSection = document.getElementById('recentSearchesSection');
     
-    // --- Recent Searches Logic ---
-    const MAX_RECENT_SEARCHES = 10;
-    
-    const renderRecentSearches = () => {
-        const searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
-        if (searches.length === 0) {
+    // --- Chat Sessions Logic ---
+    let chatSessions = JSON.parse(localStorage.getItem('chatSessions') || '[]');
+    let currentSessionId = Date.now().toString(); // Start with a new session by default
+
+    // Helper to generate a UUID-like string
+    const generateId = () => Date.now().toString() + Math.random().toString(36).substr(2, 9);
+
+    const renderSessionsList = () => {
+        if (chatSessions.length === 0) {
             recentSearchesSection.style.display = 'none';
             return;
         }
@@ -329,32 +332,42 @@ document.addEventListener('DOMContentLoaded', () => {
         recentSearchesSection.style.display = 'block';
         recentSearchesList.innerHTML = '';
         
-        searches.forEach(search => {
+        chatSessions.forEach(session => {
             const li = document.createElement('li');
-            li.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> <span>${search}</span>`;
+            li.innerHTML = `<i class="fa-regular fa-comment-dots"></i> <span>${session.title || 'Yangi sessiya'}</span>`;
             li.addEventListener('click', () => {
-                userInput.value = search;
-                // Automatically send the message
-                chatForm.dispatchEvent(new Event('submit'));
+                loadSession(session.id);
+                // On mobile, close sidebar after clicking
+                document.querySelector('.sidebar').classList.remove('active');
             });
             recentSearchesList.appendChild(li);
         });
     };
     
-    const saveRecentSearch = (text) => {
-        let searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
-        // Remove if already exists to move it to the top
-        searches = searches.filter(s => s !== text);
-        searches.unshift(text);
-        if (searches.length > MAX_RECENT_SEARCHES) {
-            searches.pop();
-        }
-        localStorage.setItem('recentSearches', JSON.stringify(searches));
-        renderRecentSearches();
+    const saveSession = () => {
+        localStorage.setItem('chatSessions', JSON.stringify(chatSessions));
+        renderSessionsList();
+    };
+
+    const loadSession = (sessionId) => {
+        const session = chatSessions.find(s => s.id === sessionId);
+        if (!session) return;
+        
+        currentSessionId = sessionId;
+        
+        // Clear chat UI
+        chatMessages.innerHTML = '';
+        
+        // Re-render messages
+        session.messages.forEach(msg => {
+            const msgEl = createMessageElement(msg.content, msg.role === 'user');
+            chatMessages.appendChild(msgEl);
+        });
+        scrollToBottom();
     };
     
     // Initialize
-    renderRecentSearches();    
+    renderSessionsList();    
 
 
     const createMessageElement = (content, isUser = false) => {
@@ -397,7 +410,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = userInput.value.trim();
         if (!text) return;
         
-        saveRecentSearch(text);
+        // Manage session state
+        let currentSession = chatSessions.find(s => s.id === currentSessionId);
+        if (!currentSession) {
+            currentSession = { id: currentSessionId, title: text.substring(0, 30), messages: [] };
+            chatSessions.unshift(currentSession);
+        }
+        
+        // Add user message to session
+        currentSession.messages.push({ role: 'user', content: text });
+        saveSession();
+
         
         userInput.value = '';
         userInput.disabled = true;
@@ -464,6 +487,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
+            
+            // Save AI response to session after stream ends
+            currentSession.messages.push({ role: 'ai', content: msgContent.innerHTML });
+            saveSession();
             
         } catch (error) {
             console.error('Error fetching AI response:', error);
@@ -534,6 +561,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const newChatBtn = document.querySelector('.new-chat-btn');
     if (newChatBtn) {
         newChatBtn.addEventListener('click', () => {
+            // Generate a new session ID
+            currentSessionId = Date.now().toString();
+            
             // Clear all messages except the welcome message
             const welcomeMessageHTML = `
                 <div class="message ai-message">
@@ -547,6 +577,9 @@ document.addEventListener('DOMContentLoaded', () => {
             chatMessages.innerHTML = welcomeMessageHTML;
             userInput.value = '';
             userInput.focus();
+            
+            // On mobile, close sidebar after clicking
+            document.querySelector('.sidebar').classList.remove('active');
         });
     }
 
