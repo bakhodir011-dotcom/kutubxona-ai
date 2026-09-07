@@ -1162,10 +1162,16 @@ input:checked + .slider:before {
     gap: 20px;
 }
 .cta-signature {
-    font-family: 'Brush Script MT', cursive;
-    font-size: 2rem;
-    color: #a1a1aa;
-    transform: rotate(-10deg);
+    font-family: var(--font-primary, 'Outfit', sans-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #10b981, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 10px;
 }
 .learn-more-btn {
     background-color: #10b981;
