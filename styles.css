@@ -237,6 +237,19 @@ body {
     font-weight: 600;
 }
 
+.chat-header-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chat-header-logo {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.4));
+}
+
 .status {
     font-size: 0.8rem;
     color: var(--text-muted);
