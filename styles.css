@@ -100,9 +100,18 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-main);
+    font-size: 1.35rem;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    user-select: none;
+}
+
+.logo span {
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
 }
 
 .logo i {
@@ -615,31 +624,46 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: white;
+    font-size: 1.45rem;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    user-select: none;
 }
+
+.header-logo span {
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+}
+
 .header-logo i {
     font-size: 2rem;
     color: var(--accent);
 }
 
 .brand-logo-img {
-    width: 32px;
-    height: 32px;
+    height: 28px;
+    width: auto;
+    max-width: 42px;
     object-fit: contain;
-    border-radius: 8px;
-    filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.4));
+    filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.45));
     flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.header-logo:hover .brand-logo-img,
+.sidebar-header .logo:hover .brand-logo-img {
+    transform: scale(1.06);
 }
 
 .landing-logo-img {
-    width: 72px;
-    height: 72px;
+    width: 64px;
+    height: auto;
     object-fit: contain;
-    border-radius: 16px;
     margin-bottom: 12px;
-    filter: drop-shadow(0 0 16px rgba(16, 185, 129, 0.5));
+    filter: drop-shadow(0 0 18px rgba(16, 185, 129, 0.5));
     animation: floatLogo 3s ease-in-out infinite alternate;
 }
 
