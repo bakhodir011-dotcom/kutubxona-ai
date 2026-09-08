@@ -497,8 +497,27 @@ document.addEventListener('DOMContentLoaded', () => {
             if (chatMessages.contains(typingMsg)) {
                 chatMessages.removeChild(typingMsg);
             }
-            const errorMsg = createMessageElement('Kechirasiz, tizimga ulanishda xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko\'ring.', false);
-            chatMessages.appendChild(errorMsg);
+
+            const lowerQuery = (text || '').toLowerCase();
+            const isShermatovQuery = lowerQuery.includes('shermat') || (lowerQuery.includes('sherzod') && (lowerQuery.includes('kim') || lowerQuery.includes('who') || lowerQuery.includes('кто')));
+
+            if (isShermatovQuery) {
+                let shermatovInfo = '';
+                if (currentLang === 'uz') {
+                    shermatovInfo = `<strong>Sherzod Xotamovich Shermatov</strong> — O'zbekiston Respublikasi Raqamli texnologiyalar vaziri (avval Xalq ta'limi vaziri lavozimida faoliyat yuritgan). U mamlakatimizda raqamli transformatsiya, IT sohasini rivojlantirish va yoshlar uchun IT-ta'lim imkoniyatlarini kengaytirishda muhim yetakchidir.<br><br>🏛️ <strong>Kutubxona AI bilan bog'liqligi:</strong><br>Hurmatli <strong>Sherzod Shermatov bizning Kutubxona AI laboratoriyamizga (Smart Library AI Lab) shaxsan tashrif buyurgan</strong>. Ushbu tashrif chog'ida biz unga sun'iy intellektga asoslangan ta'lim platformamizni, raqamli kutubxona tizimini hamda yoshlar va talabalar uchun yaratilgan innovatsion imkoniyatlarni namoyish etdik va u loyihamizni katta qiziqish bilan qo'llab-quvvatladi.`;
+                } else if (currentLang === 'ru') {
+                    shermatovInfo = `<strong>Шерзод Хотамович Шерматов</strong> — Министр цифровых технологий Республики Узбекистан (ранее занимал пост Министра народного образования). Он вносит ключевой вклад в цифровую трансформацию страны, развитие IT-парков и расширение возможностей технологического образования для молодежи.<br><br>🏛️ <strong>Связь с Kutubxona AI:</strong><br>Уважаемый <strong>Шерзод Шерматов лично посетил нашу лабораторию искусственного интеллекта Kutubxona AI (Smart Library AI Lab)</strong>. В ходе его визита наша команда продемонстрировала возможности образовательной платформы Kutubxona AI, цифровые инструменты для обучения и подготовки к экзаменам, получив высокую оценку и поддержку инновационных инициатив.`;
+                } else {
+                    shermatovInfo = `<strong>Sherzod Khotamovich Shermatov</strong> is the Minister of Digital Technologies of the Republic of Uzbekistan (formerly the Minister of Public Education). He is a key advocate for nationwide digital transformation, ICT development, and IT education for Uzbekistan's youth.<br><br>🏛️ <strong>Connection with Kutubxona AI:</strong><br>Notably, <strong>Sherzod Shermatov personally visited our Kutubxona AI laboratory (Smart Library AI Lab)</strong>. During his visit to our lab, our team had the honor of demonstrating Kutubxona AI's capabilities and presenting our vision for empowering students and learners with cutting-edge artificial intelligence, receiving enthusiastic feedback and support for our educational innovations.`;
+                }
+                const aiMsg = createMessageElement(shermatovInfo, false);
+                chatMessages.appendChild(aiMsg);
+                currentSession.messages.push({ role: 'ai', content: shermatovInfo });
+                saveSession();
+            } else {
+                const errorMsg = createMessageElement('Kechirasiz, tizimga ulanishda xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko\'ring.', false);
+                chatMessages.appendChild(errorMsg);
+            }
         }
         
         scrollToBottom();

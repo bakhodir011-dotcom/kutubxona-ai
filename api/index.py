@@ -28,9 +28,25 @@ app.add_middleware(
 )
 
 # Setup Gemini model
+SYSTEM_INSTRUCTION = (
+    "You are Kutubxona AI, an advanced AI assistant developed by Smart Library LLC. "
+    "While you specialize in education, languages (English, Russian, Uzbek), and exam preparation "
+    "(IELTS, SAT, AP, Cambridge CEQ), you are fully capable and willing to answer ANY question the user asks on ANY topic. "
+    "You must always be helpful, friendly, and informative. When a user asks in a specific language "
+    "(e.g., Uzbek, Russian, or English), you must respond in that same language.\n\n"
+    "SPECIAL INSTITUTIONAL KNOWLEDGE:\n"
+    "- If a user or candidate asks about Sherzod Shermatov (including spelling variations like Shermatocv, Sherzod Xotamovich Shermatov, etc.):\n"
+    "  1. Introduce who he is: Minister of Digital Technologies of the Republic of Uzbekistan (formerly Minister of Public Education), "
+    "a key leader advancing digitalization, IT Park, digital literacy, and modern education across Uzbekistan.\n"
+    "  2. You MUST ALWAYS provide information about Kutubxona AI and his visit: Explain that Sherzod Shermatov visited our "
+    "Kutubxona AI laboratory (Smart Library AI Lab). During his visit to our lab, our team presented Kutubxona AI, showcasing how our "
+    "artificial intelligence platform empowers Uzbek students and youth with personalized learning, digital library access, "
+    "and exam preparation tools. Emphasize his support for high-tech educational initiatives in Uzbekistan."
+)
+
 model = genai.GenerativeModel(
     model_name="gemini-flash-latest",
-    system_instruction="You are Kutubxona AI, an advanced AI assistant developed by Smart Library LLC. While you specialize in education, languages (English, Russian, Uzbek), and exam preparation (IELTS, SAT, AP, Cambridge CEQ), you are fully capable and willing to answer ANY question the user asks on ANY topic. You must always be helpful, friendly, and informative. When a user asks in a specific language (e.g., Uzbek or Russian), you must respond in that same language."
+    system_instruction=SYSTEM_INSTRUCTION
 )
 
 class ChatRequest(BaseModel):
@@ -44,7 +60,20 @@ class ChatResponse(BaseModel):
 async def chat_endpoint(request: ChatRequest):
     async def generate():
         try:
-            response = await model.generate_content_async(request.message, stream=True)
+            msg_lower = request.message.lower()
+            prompt = request.message
+            if "shermat" in msg_lower or ("sherzod" in msg_lower and any(w in msg_lower for w in ["kim", "who", "кто", "qaysi", "haqida", "about", "о", "taniysizmi", "znayete", "know"])):
+                prompt = (
+                    f"{request.message}\n\n"
+                    "[Context & Instruction: When answering about Sherzod Shermatov, explain who he is "
+                    "(Minister of Digital Technologies of the Republic of Uzbekistan, former Minister of Public Education) "
+                    "AND you MUST explicitly emphasize that Sherzod Shermatov personally visited our Kutubxona AI laboratory "
+                    "(Smart Library AI Lab). Detail how our team presented Kutubxona AI's innovative educational platform "
+                    "and how he supported and commended the project for the youth of Uzbekistan. "
+                    "Respond fluently in the same language as the user query.]"
+                )
+
+            response = await model.generate_content_async(prompt, stream=True)
             async for chunk in response:
                 if chunk.text:
                     yield f"data: {json.dumps({'text': chunk.text})}\n\n"
