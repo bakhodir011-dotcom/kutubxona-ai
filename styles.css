@@ -624,6 +624,37 @@ body {
     color: var(--accent);
 }
 
+.brand-logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 8px;
+    filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.4));
+    flex-shrink: 0;
+}
+
+.landing-logo-img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 0 16px rgba(16, 185, 129, 0.5));
+    animation: floatLogo 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatLogo {
+    0% { transform: translateY(0px) scale(1); }
+    100% { transform: translateY(-5px) scale(1.03); }
+}
+
+.bot-avatar-img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
 .nav-links {
     display: flex;
     align-items: center;

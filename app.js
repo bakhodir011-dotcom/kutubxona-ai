@@ -439,7 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const avatarDiv = document.createElement('div');
         avatarDiv.className = 'avatar';
-        avatarDiv.innerHTML = isUser ? '<i class="fa-regular fa-user"></i>' : '<i class="fa-solid fa-graduation-cap"></i>';
+        avatarDiv.innerHTML = isUser ? '<i class="fa-regular fa-user"></i>' : '<img src="images/kutubxona_logo.png" class="bot-avatar-img" alt="Kutubxona AI">';
         
         const contentDiv = document.createElement('div');
         contentDiv.className = 'message-content';
@@ -655,7 +655,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clear all messages except the welcome message
             const welcomeMessageHTML = `
                 <div class="message ai-message">
-                    <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                    <div class="avatar"><img src="images/kutubxona_logo.png" class="bot-avatar-img" alt="Kutubxona AI"></div>
                     <div class="message-content">
                         <p data-i18n="welcomeMsg1">${translations[currentLang].welcomeMsg1}</p>
                         <p data-i18n="welcomeMsg2">${translations[currentLang].welcomeMsg2}</p>
