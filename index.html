@@ -221,14 +221,23 @@
                 <h1 data-i18n="landingTitle">Kutubxona AI</h1>
                 <p data-i18n="landingSubtitle">Enter password to access the digital learning assistant.</p>
                 
+                <div class="login-role-tabs">
+                    <button type="button" class="role-tab active" id="tabCandidate"><i class="fa-solid fa-user-graduate"></i> Talaba</button>
+                    <button type="button" class="role-tab" id="tabAdmin"><i class="fa-solid fa-shield-halved"></i> Admin</button>
+                </div>
+
                 <form id="loginForm" class="login-form">
+                    <div class="input-group admin-user-group hidden" id="adminUserGroup">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="usernameInput" placeholder="Admin Login (admin)" autocomplete="off">
+                    </div>
                     <div class="input-group">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" id="passwordInput" placeholder="Password" data-i18n-placeholder="passwordPlaceholder" autocomplete="off">
                         <button type="button" id="togglePasswordBtn" class="toggle-password"><i class="fa-solid fa-eye"></i></button>
                     </div>
                     <p id="errorMsg" class="error-msg" data-i18n="wrongPassword">Incorrect password</p>
-                    <button type="submit" class="primary-btn" data-i18n="enterBtn">Enter</button>
+                    <button type="submit" class="primary-btn" id="loginSubmitBtn" data-i18n="enterBtn">Enter</button>
                 </form>
             </div>
             <button class="close-modal-btn" id="closeLoginBtn"><i class="fa-solid fa-xmark"></i></button>
@@ -244,6 +253,9 @@
                     <i class="fa-solid fa-graduation-cap"></i>
                     <span>Kutubxona AI</span>
                 </div>
+                <button class="admin-badge-btn hidden" id="openAdminDashboardBtn" title="Admin Boshqaruv Markazi">
+                    <i class="fa-solid fa-shield-halved"></i> Admin
+                </button>
             </div>
             
             <div class="sidebar-menu">
@@ -279,6 +291,9 @@
             </div>
             
             <div class="sidebar-footer">
+                <button class="admin-sidebar-btn hidden" id="openAdminDashboardSidebarBtn">
+                    <i class="fa-solid fa-shield-halved"></i> <span>Admin Panel</span>
+                </button>
                 <button class="settings-btn">
                     <i class="fa-solid fa-gear"></i> <span data-i18n="settings">Settings</span>
                 </button>
@@ -342,6 +357,145 @@
                         <input type="checkbox" id="themeToggleBtn">
                         <span class="slider round"></span>
                     </label>
+                </div>
+                <div class="setting-item admin-setting-item hidden" id="adminSettingItem">
+                    <span>Admin Rejimi</span>
+                    <button type="button" class="action-btn small-btn" id="settingsAdminBtn"><i class="fa-solid fa-shield-halved"></i> Panelni ochish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Modal -->
+    <div id="adminModal" class="modal-overlay hidden">
+        <div class="modal-content admin-modal-card glass-card">
+            <div class="modal-header admin-modal-header">
+                <div class="admin-title-wrap">
+                    <div class="admin-badge"><i class="fa-solid fa-shield-halved"></i> ADMIN PANEL</div>
+                    <h3>Kutubxona AI — Boshqaruv Markazi</h3>
+                </div>
+                <div class="admin-header-actions">
+                    <button id="adminRefreshBtn" class="action-btn small-btn" title="Yangilash"><i class="fa-solid fa-rotate"></i> Yangilash</button>
+                    <button id="closeAdminBtn" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+
+            <!-- Admin Nav Tabs -->
+            <div class="admin-tabs">
+                <button class="admin-tab-btn active" data-tab="analyticsTab"><i class="fa-solid fa-chart-pie"></i> Statistika</button>
+                <button class="admin-tab-btn" data-tab="conversationsTab"><i class="fa-solid fa-comments"></i> Saqlangan Suhbatlar (<span id="savedChatsCount">0</span>)</button>
+                <button class="admin-tab-btn" data-tab="knowledgeTab"><i class="fa-solid fa-brain"></i> Tizim Bilimlari</button>
+            </div>
+
+            <!-- Tab 1: Analytics -->
+            <div class="admin-tab-content active" id="analyticsTab">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-message"></i></div>
+                        <div class="stat-data">
+                            <span class="stat-number" id="statTotalQueries">0</span>
+                            <span class="stat-label">Jami So'rovlar</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-calendar-day"></i></div>
+                        <div class="stat-data">
+                            <span class="stat-number" id="statTodayQueries">0</span>
+                            <span class="stat-label">Bugungi Savollar</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                        <div class="stat-data">
+                            <span class="stat-number" id="statActiveSessions">0</span>
+                            <span class="stat-label">Sessiyalar Soni</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon highlight-icon"><i class="fa-solid fa-star"></i></div>
+                        <div class="stat-data">
+                            <span class="stat-number" id="statTopTopic">Sherzod Shermatov</span>
+                            <span class="stat-label">Asosiy Mavzu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-section-block">
+                    <h4><i class="fa-solid fa-tags"></i> Ko'p beriladigan savollar / Kalit so'zlar</h4>
+                    <div class="keyword-tags" id="topKeywordsList">
+                        <span class="keyword-pill"><i class="fa-solid fa-check"></i> Sherzod Shermatov</span>
+                        <span class="keyword-pill"><i class="fa-solid fa-check"></i> IELTS Speaking</span>
+                        <span class="keyword-pill"><i class="fa-solid fa-check"></i> SAT Math</span>
+                        <span class="keyword-pill"><i class="fa-solid fa-check"></i> Kutubxona AI laboratoriyasi</span>
+                        <span class="keyword-pill"><i class="fa-solid fa-check"></i> Adiz Boboyev</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Saved Conversations -->
+            <div class="admin-tab-content" id="conversationsTab">
+                <div class="conversations-toolbar">
+                    <div class="search-wrap">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="adminSearchInput" placeholder="Savol yoki javob bo'yicha qidirish...">
+                    </div>
+                    <div class="filter-wrap">
+                        <select id="adminLangFilter">
+                            <option value="all">Barcha Tillar</option>
+                            <option value="uz">O'zbekcha (UZ)</option>
+                            <option value="en">English (EN)</option>
+                            <option value="ru">Русский (RU)</option>
+                        </select>
+                    </div>
+                    <div class="toolbar-actions">
+                        <button id="exportCsvBtn" class="action-btn" title="CSV formatida yuklab olish"><i class="fa-solid fa-file-csv"></i> CSV</button>
+                        <button id="exportJsonBtn" class="action-btn" title="JSON formatida yuklab olish"><i class="fa-solid fa-file-code"></i> JSON</button>
+                        <button id="clearLogsBtn" class="action-btn danger-btn" title="Tarixni tozalash"><i class="fa-solid fa-trash"></i> Tozalash</button>
+                    </div>
+                </div>
+
+                <div class="conversations-table-wrap">
+                    <div id="conversationsList" class="conversations-list">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: System Knowledge -->
+            <div class="admin-tab-content" id="knowledgeTab">
+                <div class="knowledge-card">
+                    <h4><i class="fa-solid fa-building-columns"></i> O'rnatilgan Maxsus Bilimlar Boshqaruvi</h4>
+                    <p class="knowledge-desc">Kutubxona AI ushbu maxsus muassasaviy bilimlarni eslab qoladi va foydalanuvchilar savol berganda to'liq javob beradi:</p>
+                    
+                    <div class="knowledge-item">
+                        <div class="k-header">
+                            <div class="k-title"><i class="fa-solid fa-user-tie"></i> Sherzod Shermatov (Raqamli texnologiyalar vaziri)</div>
+                            <span class="k-badge active-badge">Faol</span>
+                        </div>
+                        <div class="k-body">
+                            Nomzod yoki talaba Sherzod Shermatov haqida so'raganda, uning biografiyasi bilan birga <strong>bizning Kutubxona AI laboratoriyamizga (Smart Library AI Lab) tashrif buyurgani</strong>, unga loyiha namoyish qilingani va u tashabbusni qo'llab-quvvatlagani haqidagi ma'lumot doim beriladi.
+                        </div>
+                    </div>
+
+                    <div class="knowledge-item">
+                        <div class="k-header">
+                            <div class="k-title"><i class="fa-solid fa-landmark"></i> Adiz Boboyev (Samarqand viloyati hokimi)</div>
+                            <span class="k-badge active-badge">Faol</span>
+                        </div>
+                        <div class="k-body">
+                            Kutubxona AI Samarqand viloyati hokimi Adiz Boboyev bilan uchrashuvda taqdim etilgan, mintaqa yoshlariga AI ta'limini taqdim etish va innovatsiyalarni kengaytirish yo'lga qo'yilgan.
+                        </div>
+                    </div>
+
+                    <div class="knowledge-item">
+                        <div class="k-header">
+                            <div class="k-title"><i class="fa-solid fa-book-open-reader"></i> Smart Library LLC & Kutubxona AI</div>
+                            <span class="k-badge active-badge">Faol</span>
+                        </div>
+                        <div class="k-body">
+                            O'zbekiston talabalari uchun yaratilgan milliy sun'iy intellekt ta'lim yordamchisi: IELTS, SAT, AP, Cambridge CEQ va xorijiy tillarni o'rganishga ixtisoslashgan.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

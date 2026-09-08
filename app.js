@@ -271,23 +271,79 @@ document.addEventListener('DOMContentLoaded', () => {
         landingPage.style.display = 'block';
     });
 
-    // --- Authentication Logic ---
+    // --- Authentication & Role Logic ---
     const loginForm = document.getElementById('loginForm');
     const passwordInput = document.getElementById('passwordInput');
+    const usernameInput = document.getElementById('usernameInput');
+    const adminUserGroup = document.getElementById('adminUserGroup');
+    const tabCandidate = document.getElementById('tabCandidate');
+    const tabAdmin = document.getElementById('tabAdmin');
     const togglePasswordBtn = document.getElementById('togglePasswordBtn');
     const errorMsg = document.getElementById('errorMsg');
     const appContainer = document.getElementById('appContainer');
+    const openAdminDashboardBtn = document.getElementById('openAdminDashboardBtn');
+    const openAdminDashboardSidebarBtn = document.getElementById('openAdminDashboardSidebarBtn');
+    const adminSettingItem = document.getElementById('adminSettingItem');
 
-    togglePasswordBtn.addEventListener('click', () => {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        togglePasswordBtn.innerHTML = type === 'password' ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
-    });
+    let currentRole = 'candidate'; // 'candidate' or 'admin'
+    let isAdminLoggedIn = sessionStorage.getItem('kutubxona_is_admin') === 'true';
+
+    const setAdminModeUI = (isAdmin) => {
+        isAdminLoggedIn = isAdmin;
+        sessionStorage.setItem('kutubxona_is_admin', isAdmin ? 'true' : 'false');
+        if (isAdmin) {
+            if (openAdminDashboardBtn) openAdminDashboardBtn.classList.remove('hidden');
+            if (openAdminDashboardSidebarBtn) openAdminDashboardSidebarBtn.classList.remove('hidden');
+            if (adminSettingItem) adminSettingItem.classList.remove('hidden');
+        } else {
+            if (openAdminDashboardBtn) openAdminDashboardBtn.classList.add('hidden');
+            if (openAdminDashboardSidebarBtn) openAdminDashboardSidebarBtn.classList.add('hidden');
+            if (adminSettingItem) adminSettingItem.classList.add('hidden');
+        }
+    };
+
+    if (tabCandidate && tabAdmin) {
+        tabCandidate.addEventListener('click', () => {
+            currentRole = 'candidate';
+            tabCandidate.classList.add('active');
+            tabAdmin.classList.remove('active');
+            if (adminUserGroup) adminUserGroup.classList.add('hidden');
+            passwordInput.placeholder = 'Password';
+            errorMsg.style.display = 'none';
+        });
+
+        tabAdmin.addEventListener('click', () => {
+            currentRole = 'admin';
+            tabAdmin.classList.add('active');
+            tabCandidate.classList.remove('active');
+            if (adminUserGroup) adminUserGroup.classList.remove('hidden');
+            passwordInput.placeholder = 'Admin Password';
+            if (usernameInput) usernameInput.focus();
+            errorMsg.style.display = 'none';
+        });
+    }
+
+    if (togglePasswordBtn) {
+        togglePasswordBtn.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePasswordBtn.innerHTML = type === 'password' ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
+        });
+    }
 
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const pwd = passwordInput.value;
-        if (pwd === 'kutubxona2026') {
+        const pwd = (passwordInput.value || '').trim();
+        const usr = usernameInput ? (usernameInput.value || '').trim() : '';
+
+        const isStandardSuccess = (currentRole === 'candidate' && pwd === 'kutubxona2026');
+        const isAdminExplicitSuccess = (currentRole === 'admin' && usr === 'admin' && pwd === 'admin2026');
+        const isAdminQuickSuccess = (pwd === 'admin2026');
+
+        if (isStandardSuccess || isAdminExplicitSuccess || isAdminQuickSuccess) {
+            const adminActive = isAdminExplicitSuccess || isAdminQuickSuccess;
+            setAdminModeUI(adminActive);
+
             errorMsg.style.display = 'none';
             loginModal.classList.add('fade-out');
             landingPage.classList.add('fade-out');
@@ -301,12 +357,19 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             errorMsg.style.display = 'block';
             passwordInput.value = '';
-            document.querySelector('.glass-card').style.transform = 'translateX(-10px)';
-            setTimeout(() => { document.querySelector('.glass-card').style.transform = 'translateX(10px)'; }, 100);
-            setTimeout(() => { document.querySelector('.glass-card').style.transform = 'translateX(-10px)'; }, 200);
-            setTimeout(() => { document.querySelector('.glass-card').style.transform = 'translateX(0)'; }, 300);
+            const card = document.querySelector('.glass-card');
+            if (card) {
+                card.style.transform = 'translateX(-10px)';
+                setTimeout(() => { card.style.transform = 'translateX(10px)'; }, 100);
+                setTimeout(() => { card.style.transform = 'translateX(-10px)'; }, 200);
+                setTimeout(() => { card.style.transform = 'translateX(0)'; }, 300);
+            }
         }
     });
+
+    if (isAdminLoggedIn) {
+        setAdminModeUI(true);
+    }
 
     // --- Chat Logic ---
     const chatForm = document.getElementById('chatForm');
@@ -491,6 +554,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Save AI response to session after stream ends
             currentSession.messages.push({ role: 'ai', content: msgContent.innerHTML });
             saveSession();
+
+            // Save conversation into Admin Logs
+            AdminLogManager.saveLog(text, msgContent.innerHTML, currentLang, currentSessionId);
             
         } catch (error) {
             console.error('Error fetching AI response:', error);
@@ -514,6 +580,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 chatMessages.appendChild(aiMsg);
                 currentSession.messages.push({ role: 'ai', content: shermatovInfo });
                 saveSession();
+
+                // Save fallback query into Admin Logs
+                AdminLogManager.saveLog(text, shermatovInfo, currentLang, currentSessionId);
             } else {
                 const errorMsg = createMessageElement('Kechirasiz, tizimga ulanishda xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko\'ring.', false);
                 chatMessages.appendChild(errorMsg);
@@ -626,6 +695,242 @@ document.addEventListener('DOMContentLoaded', () => {
             userInput.focus();
         });
     }
+
+    // --- Admin Logging & Persistence Manager ---
+    const AdminLogManager = {
+        STORAGE_KEY: 'kutubxona_admin_logs',
+        
+        getLogs: () => {
+            try {
+                return JSON.parse(localStorage.getItem(AdminLogManager.STORAGE_KEY) || '[]');
+            } catch (e) {
+                return [];
+            }
+        },
+
+        saveLog: (query, reply, lang, sessionId) => {
+            if (!query || !reply) return;
+            const logs = AdminLogManager.getLogs();
+            const newEntry = {
+                id: 'log_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+                timestamp: new Date().toISOString(),
+                user_query: query,
+                ai_response: reply,
+                language: lang || 'uz',
+                session_id: sessionId || 'default'
+            };
+            logs.unshift(newEntry);
+            if (logs.length > 500) logs.pop();
+            try {
+                localStorage.setItem(AdminLogManager.STORAGE_KEY, JSON.stringify(logs));
+            } catch (e) {
+                console.warn('LocalStorage limit reached', e);
+            }
+
+            // Also send to backend
+            try {
+                const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                const BACKEND_URL = isLocalhost ? 'http://localhost:8000' : '';
+                fetch(`${BACKEND_URL}/api/admin/logs`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newEntry)
+                }).catch(() => {});
+            } catch (err) {}
+
+            // If modal is open, refresh
+            const adminModal = document.getElementById('adminModal');
+            if (adminModal && !adminModal.classList.contains('hidden')) {
+                renderAdminDashboard();
+            }
+        },
+
+        clearLogs: () => {
+            localStorage.removeItem(AdminLogManager.STORAGE_KEY);
+            renderAdminDashboard();
+        },
+
+        exportAsJson: () => {
+            const logs = AdminLogManager.getLogs();
+            const blob = new Blob([JSON.stringify(logs, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `kutubxona_ai_logs_${new Date().toISOString().slice(0, 10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        },
+
+        exportAsCsv: () => {
+            const logs = AdminLogManager.getLogs();
+            if (logs.length === 0) {
+                alert("Eksport qilish uchun suhbatlar mavjud emas.");
+                return;
+            }
+            const headers = ['ID', 'Sana/Vaqt', 'Til', 'Nomzod Savoli', 'AI Javobi'];
+            const rows = logs.map(l => [
+                `"${l.id}"`,
+                `"${new Date(l.timestamp).toLocaleString()}"`,
+                `"${l.language}"`,
+                `"${(l.user_query || '').replace(/"/g, '""')}"`,
+                `"${(l.ai_response || '').replace(/<[^>]*>/g, '').replace(/"/g, '""')}"`
+            ]);
+            const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `kutubxona_ai_logs_${new Date().toISOString().slice(0, 10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    };
+
+    const escapeHtml = (unsafe) => {
+        return (unsafe || '')
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    };
+
+    const renderAdminDashboard = () => {
+        const logs = AdminLogManager.getLogs();
+        
+        // 1. Stats calculation
+        const totalQueries = logs.length;
+        const todayStr = new Date().toDateString();
+        const todayQueries = logs.filter(l => new Date(l.timestamp).toDateString() === todayStr).length;
+        const uniqueSessions = new Set(logs.map(l => l.session_id)).size;
+
+        let shermatovCount = 0;
+        let ieltsCount = 0;
+        let satCount = 0;
+        logs.forEach(l => {
+            const q = (l.user_query || '').toLowerCase();
+            if (q.includes('shermat') || q.includes('sherzod')) shermatovCount++;
+            if (q.includes('ielts')) ieltsCount++;
+            if (q.includes('sat')) satCount++;
+        });
+        let topTopic = 'Sherzod Shermatov';
+        if (ieltsCount > shermatovCount && ieltsCount > satCount) topTopic = 'IELTS Prep';
+        else if (satCount > shermatovCount && satCount > ieltsCount) topTopic = 'SAT Prep';
+
+        const statTotalElem = document.getElementById('statTotalQueries');
+        const statTodayElem = document.getElementById('statTodayQueries');
+        const statSessionsElem = document.getElementById('statActiveSessions');
+        const statTopTopicElem = document.getElementById('statTopTopic');
+        const savedChatsCountElem = document.getElementById('savedChatsCount');
+
+        if (statTotalElem) statTotalElem.textContent = totalQueries;
+        if (statTodayElem) statTodayElem.textContent = todayQueries;
+        if (statSessionsElem) statSessionsElem.textContent = uniqueSessions;
+        if (statTopTopicElem) statTopTopicElem.textContent = topTopic;
+        if (savedChatsCountElem) savedChatsCountElem.textContent = totalQueries;
+
+        // 2. Render conversations list
+        const conversationsList = document.getElementById('conversationsList');
+        if (!conversationsList) return;
+
+        const searchKeyword = (document.getElementById('adminSearchInput')?.value || '').toLowerCase();
+        const langFilter = document.getElementById('adminLangFilter')?.value || 'all';
+
+        const filteredLogs = logs.filter(l => {
+            const matchLang = (langFilter === 'all' || l.language === langFilter);
+            const matchSearch = (!searchKeyword || 
+                (l.user_query || '').toLowerCase().includes(searchKeyword) || 
+                (l.ai_response || '').toLowerCase().includes(searchKeyword));
+            return matchLang && matchSearch;
+        });
+
+        if (filteredLogs.length === 0) {
+            conversationsList.innerHTML = `
+                <div class="empty-logs-msg">
+                    <i class="fa-regular fa-comment-dots"></i>
+                    <p>Hozircha saqlangan suhbatlar mavjud emas yoki qidiruv bo'yicha topilmadi.</p>
+                </div>
+            `;
+            return;
+        }
+
+        conversationsList.innerHTML = filteredLogs.map(l => {
+            const dateStr = new Date(l.timestamp).toLocaleString();
+            return `
+                <div class="conv-card">
+                    <div class="conv-card-header">
+                        <div class="conv-meta-left">
+                            <span class="conv-lang-badge">${(l.language || 'uz').toUpperCase()}</span>
+                            <span class="conv-time"><i class="fa-regular fa-clock"></i> ${dateStr}</span>
+                        </div>
+                    </div>
+                    <div class="conv-prompt-row">
+                        <i class="fa-solid fa-circle-question"></i>
+                        <span>${escapeHtml(l.user_query)}</span>
+                    </div>
+                    <div class="conv-reply-row">
+                        ${l.ai_response}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    };
+
+    // --- Admin Dashboard Modal & Events ---
+    const adminModal = document.getElementById('adminModal');
+    const closeAdminBtn = document.getElementById('closeAdminBtn');
+    const adminRefreshBtn = document.getElementById('adminRefreshBtn');
+    const exportCsvBtn = document.getElementById('exportCsvBtn');
+    const exportJsonBtn = document.getElementById('exportJsonBtn');
+    const clearLogsBtn = document.getElementById('clearLogsBtn');
+    const adminSearchInput = document.getElementById('adminSearchInput');
+    const adminLangFilter = document.getElementById('adminLangFilter');
+    const settingsAdminBtn = document.getElementById('settingsAdminBtn');
+
+    const openAdminModal = () => {
+        if (adminModal) {
+            adminModal.classList.remove('hidden');
+            renderAdminDashboard();
+        }
+    };
+
+    if (openAdminDashboardBtn) openAdminDashboardBtn.addEventListener('click', openAdminModal);
+    if (openAdminDashboardSidebarBtn) openAdminDashboardSidebarBtn.addEventListener('click', openAdminModal);
+    if (settingsAdminBtn) settingsAdminBtn.addEventListener('click', openAdminModal);
+
+    if (closeAdminBtn && adminModal) {
+        closeAdminBtn.addEventListener('click', () => adminModal.classList.add('hidden'));
+        adminModal.addEventListener('click', (e) => {
+            if (e.target === adminModal) adminModal.classList.add('hidden');
+        });
+    }
+
+    // Tabs switching
+    document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            const target = document.getElementById(btn.getAttribute('data-tab'));
+            if (target) target.classList.add('active');
+        });
+    });
+
+    if (adminRefreshBtn) adminRefreshBtn.addEventListener('click', renderAdminDashboard);
+    if (exportCsvBtn) exportCsvBtn.addEventListener('click', () => AdminLogManager.exportAsCsv());
+    if (exportJsonBtn) exportJsonBtn.addEventListener('click', () => AdminLogManager.exportAsJson());
+    if (clearLogsBtn) clearLogsBtn.addEventListener('click', () => {
+        if (confirm("Haqiqatan ham barcha saqlangan suhbatlar tarixini tozalashni xohlaysizmi?")) {
+            AdminLogManager.clearLogs();
+        }
+    });
+
+    if (adminSearchInput) adminSearchInput.addEventListener('input', renderAdminDashboard);
+    if (adminLangFilter) adminLangFilter.addEventListener('change', renderAdminDashboard);
 
     // Initialize default language
     updateLanguage('uz');

@@ -83,6 +83,59 @@ async def chat_endpoint(request: ChatRequest):
             
     return StreamingResponse(generate(), media_type="text/event-stream")
 
+# --- Admin Models & Endpoints ---
+class AdminLoginRequest(BaseModel):
+    username: str
+    password: str
+
+class LogEntry(BaseModel):
+    id: str = ""
+    timestamp: str = ""
+    user_query: str
+    ai_response: str
+    language: str = "uz"
+    session_id: str = ""
+
+LOGS_FILE = "/tmp/chat_logs.json"
+
+def read_logs():
+    if os.path.exists(LOGS_FILE):
+        try:
+            with open(LOGS_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return []
+    return []
+
+def write_logs(logs):
+    try:
+        with open(LOGS_FILE, "w", encoding="utf-8") as f:
+            json.dump(logs, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"Error saving logs: {e}")
+
+@app.post("/api/admin/login")
+async def admin_login(req: AdminLoginRequest):
+    admin_user = os.getenv("ADMIN_USERNAME", "admin")
+    admin_pass = os.getenv("ADMIN_PASSWORD", "admin2026")
+    if req.username.strip() == admin_user and req.password.strip() == admin_pass:
+        return {"status": "success", "role": "admin", "token": "kutubxona_admin_authorized_token"}
+    raise HTTPException(status_code=401, detail="Invalid admin credentials")
+
+@app.get("/api/admin/logs")
+async def get_admin_logs():
+    return {"logs": read_logs()}
+
+@app.post("/api/admin/logs")
+async def save_admin_log(entry: LogEntry):
+    logs = read_logs()
+    logs.insert(0, entry.dict())
+    if len(logs) > 500:
+        logs = logs[:500]
+    write_logs(logs)
+    return {"status": "saved", "count": len(logs)}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
