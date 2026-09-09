@@ -46,6 +46,10 @@
     --border-color: rgba(0, 0, 0, 0.08);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -1090,6 +1094,7 @@ input:checked + .slider:before {
     background: transparent;
     z-index: 2;
     overflow: hidden;
+    scroll-margin-top: 85px;
 }
 
 .hero-grid-overlay {
@@ -1220,6 +1225,7 @@ input:checked + .slider:before {
     position: relative;
     z-index: 2;
     border-top: 1px solid rgba(16, 185, 129, 0.12);
+    scroll-margin-top: 85px;
 }
 
 .container {

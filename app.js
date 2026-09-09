@@ -255,11 +255,49 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
-        
-        // Close menu when a link is clicked
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
+    }
+
+    // Smooth automated scrolling for all navigation anchors (Home, About, Our Mission, Projects, Contact, Scroll Hint)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
+            if (targetId && targetId !== '#') {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    
+                    // Close mobile menu if open
+                    if (navLinks) {
+                        navLinks.classList.remove('active');
+                    }
+                    
+                    const header = document.querySelector('.site-header');
+                    const headerHeight = header ? header.offsetHeight : 80;
+                    
+                    if (targetId === '#heroSection') {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        const elementTop = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                        window.scrollTo({
+                            top: elementTop - headerHeight + 5,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            }
+        });
+    });
+
+    // Logo click scrolls smoothly to top
+    const headerLogo = document.querySelector('.header-logo');
+    if (headerLogo) {
+        headerLogo.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         });
     }
