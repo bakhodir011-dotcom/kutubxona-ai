@@ -8,8 +8,8 @@ const translations = {
         navTryBtn: "Get Started",
         aiLabSub: "AI Laboratory of Education",
         heroTitle: "AI Laboratory for<br>Education",
-        heroSubtitle: "Combining human potential and AI power in education",
-        heroBtnDiscuss: "Discuss Project",
+        heroSubtitle: "Unlocking world-class knowledge, exam prep, and interactive study tools for everyone",
+        heroBtnDiscuss: "Start Learning",
         govTag: "A STEP TOWARDS A SMARTER SAMARKAND",
         govTitle: 'Meeting with<br><span class="highlight">Adiz Boboyev</span>',
         govRole: "Governor of Samarkand Region",
@@ -69,8 +69,8 @@ const translations = {
         navTryBtn: "Boshlash",
         aiLabSub: "Ta'lim uchun AI laboratoriyasi",
         heroTitle: "Ta'lim uchun<br>AI Laboratoriyasi",
-        heroSubtitle: "Ta'limda inson salohiyati va sun'iy intellekt qudratini birlashtiramiz",
-        heroBtnDiscuss: "Loyihani muhokama qilish",
+        heroSubtitle: "Har bir o'quvchi uchun jahon andozalaridagi bilimlar, imtihonlarga tayyorgarlik va interaktiv ta'lim vositalari",
+        heroBtnDiscuss: "O'rganishni boshlash",
         govTag: "SAMARQANDNI YANADA AQL-IDROKLI QILISH SARI QADAM",
         govTitle: 'Uchrashuv:<br><span class="highlight">Adiz Boboyev</span>',
         govRole: "Samarqand viloyati hokimi",
@@ -130,8 +130,8 @@ const translations = {
         navTryBtn: "Начать",
         aiLabSub: "Лаборатория ИИ для образования",
         heroTitle: "Лаборатория ИИ<br>для образования",
-        heroSubtitle: "Объединяем человеческий потенциал и возможности ИИ в образовании",
-        heroBtnDiscuss: "Обсудить проект",
+        heroSubtitle: "Открывая передовые знания, подготовку к экзаменам и интерактивные учебные инструменты для каждого",
+        heroBtnDiscuss: "Начать обучение",
         govTag: "ШАГ К БОЛЕЕ УМНОМУ САМАРКАНДУ",
         govTitle: 'Встреча с<br><span class="highlight">Адизом Бобоевым</span>',
         govRole: "Хоким Самаркандской области",
@@ -283,12 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const heroDiscussBtn = document.getElementById('heroDiscussBtn');
     if (heroDiscussBtn) {
-        heroDiscussBtn.addEventListener('click', () => {
-            const contactSection = document.getElementById('contactSection');
-            if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+        heroDiscussBtn.addEventListener('click', openLoginModal);
     }
 
     closeLoginBtn.addEventListener('click', () => {
