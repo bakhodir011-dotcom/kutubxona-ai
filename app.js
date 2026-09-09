@@ -1,10 +1,15 @@
 const translations = {
     en: {
         navHome: "Home",
+        navAbout: "About",
         navMission: "Our Mission",
-        navTeam: "Our Team",
+        navProjects: "Projects",
         navContact: "Contact",
-        navTryBtn: "Try Kutubxona AI",
+        navTryBtn: "Get Started",
+        aiLabSub: "AI Laboratory of Education",
+        heroTitle: "AI Laboratory for<br>Education",
+        heroSubtitle: "Combining human potential and AI power in education",
+        heroBtnDiscuss: "Discuss Project",
         govTag: "A STEP TOWARDS A SMARTER SAMARKAND",
         govTitle: 'Meeting with<br><span class="highlight">Adiz Boboyev</span>',
         govRole: "Governor of Samarkand Region",
@@ -57,10 +62,15 @@ const translations = {
     },
     uz: {
         navHome: "Bosh sahifa",
+        navAbout: "Haqida",
         navMission: "Bizning maqsadimiz",
-        navTeam: "Bizning jamoa",
+        navProjects: "Loyihalar",
         navContact: "Aloqa",
-        navTryBtn: "Kutubxona AI'ni sinab ko'rish",
+        navTryBtn: "Boshlash",
+        aiLabSub: "Ta'lim uchun AI laboratoriyasi",
+        heroTitle: "Ta'lim uchun<br>AI Laboratoriyasi",
+        heroSubtitle: "Ta'limda inson salohiyati va sun'iy intellekt qudratini birlashtiramiz",
+        heroBtnDiscuss: "Loyihani muhokama qilish",
         govTag: "SAMARQANDNI YANADA AQL-IDROKLI QILISH SARI QADAM",
         govTitle: 'Uchrashuv:<br><span class="highlight">Adiz Boboyev</span>',
         govRole: "Samarqand viloyati hokimi",
@@ -113,10 +123,15 @@ const translations = {
     },
     ru: {
         navHome: "Главная",
+        navAbout: "О нас",
         navMission: "Наша миссия",
-        navTeam: "Наша команда",
+        navProjects: "Проекты",
         navContact: "Контакты",
-        navTryBtn: "Попробовать Kutubxona AI",
+        navTryBtn: "Начать",
+        aiLabSub: "Лаборатория ИИ для образования",
+        heroTitle: "Лаборатория ИИ<br>для образования",
+        heroSubtitle: "Объединяем человеческий потенциал и возможности ИИ в образовании",
+        heroBtnDiscuss: "Обсудить проект",
         govTag: "ШАГ К БОЛЕЕ УМНОМУ САМАРКАНДУ",
         govTitle: 'Встреча с<br><span class="highlight">Адизом Бобоевым</span>',
         govRole: "Хоким Самаркандской области",
@@ -170,7 +185,7 @@ const translations = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    let currentLang = 'uz';
+    let currentLang = 'en';
 
     // --- 3D Background Init ---
     let vantaEffect = null;
@@ -185,10 +200,11 @@ document.addEventListener('DOMContentLoaded', () => {
             scale: 1.00,
             scaleMobile: 1.00,
             color: 0x10b981,
-            backgroundColor: 0x09090b,
-            points: 12.00,
-            maxDistance: 22.00,
-            spacing: 18.00
+            backgroundColor: 0x030706,
+            points: 15.00,
+            maxDistance: 25.00,
+            spacing: 16.00,
+            showDots: true
         });
     }
 
@@ -264,6 +280,15 @@ document.addEventListener('DOMContentLoaded', () => {
     openLoginBtn.addEventListener('click', openLoginModal);
     if (btnTryGovernor) {
         btnTryGovernor.addEventListener('click', openLoginModal);
+    }
+    const heroDiscussBtn = document.getElementById('heroDiscussBtn');
+    if (heroDiscussBtn) {
+        heroDiscussBtn.addEventListener('click', () => {
+            const contactSection = document.getElementById('contactSection');
+            if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
     }
 
     closeLoginBtn.addEventListener('click', () => {
@@ -933,5 +958,5 @@ document.addEventListener('DOMContentLoaded', () => {
     if (adminLangFilter) adminLangFilter.addEventListener('change', renderAdminDashboard);
 
     // Initialize default language
-    updateLanguage('uz');
+    updateLanguage('en');
 });

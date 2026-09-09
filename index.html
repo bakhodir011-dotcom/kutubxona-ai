@@ -25,23 +25,45 @@
         <header class="site-header">
             <div class="header-logo">
                 <img src="images/kutubxona_logo.png" alt="Kutubxona AI Logo" class="brand-logo-img">
-                <span>Kutubxona AI</span>
+                <div class="logo-text-group">
+                    <span class="logo-main">AI LAB</span>
+                    <span class="logo-sub" data-i18n="aiLabSub">AI Laboratory of Education</span>
+                </div>
             </div>
             <nav class="nav-links">
-                <a href="#" data-i18n="navHome">Home</a>
+                <a href="#heroSection" data-i18n="navHome">Home</a>
+                <a href="#governorSection" data-i18n="navAbout">About</a>
                 <a href="#missionSection" data-i18n="navMission">Our Mission</a>
+                <a href="#governorSection" data-i18n="navProjects">Projects</a>
                 <a href="#contactSection" data-i18n="navContact">Contact</a>
                 <div class="landing-lang">
-                    <button class="lang-btn active" data-lang="uz">UZ</button>
-                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="uz">UZ</button>
+                    <button class="lang-btn active" data-lang="en">EN</button>
                     <button class="lang-btn" data-lang="ru">RU</button>
                 </div>
-                <button class="btn-try" id="openLoginBtn" data-i18n="navTryBtn">Try Kutubxona AI</button>
+                <button class="btn-try" id="openLoginBtn" data-i18n="navTryBtn">Get Started</button>
             </nav>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </header>
+
+        <!-- Hero Section: AI Laboratory for Education (Matches Image 1) -->
+        <section id="heroSection" class="hero-section">
+            <div class="hero-grid-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title" data-i18n="heroTitle">AI Laboratory for<br>Education</h1>
+                <p class="hero-subtitle" data-i18n="heroSubtitle">Combining human potential and AI power in education</p>
+                <div class="hero-cta-wrap">
+                    <button class="hero-btn-discuss" id="heroDiscussBtn" data-i18n="heroBtnDiscuss">Discuss Project</button>
+                </div>
+            </div>
+            <div class="hero-scroll-hint">
+                <a href="#governorSection" class="scroll-down-arrow" aria-label="Scroll to learn more">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </a>
+            </div>
+        </section>
 
         <!-- Section 1: Governor -->
         <section id="governorSection" class="landing-section governor-section">
