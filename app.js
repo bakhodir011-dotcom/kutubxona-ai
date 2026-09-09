@@ -405,12 +405,19 @@ document.addEventListener('DOMContentLoaded', () => {
             errorMsg.style.display = 'none';
             loginModal.classList.add('fade-out');
             landingPage.classList.add('fade-out');
-            if (vantaEffect) vantaEffect.destroy();
+            const vantaBg = document.getElementById('vanta-bg');
+            if (vantaBg) vantaBg.style.display = 'none';
+            if (vantaEffect) {
+                try { vantaEffect.destroy(); } catch (err) {}
+            }
             setTimeout(() => {
                 loginModal.style.display = 'none';
                 landingPage.style.display = 'none';
                 appContainer.classList.remove('hidden');
-                document.getElementById('userInput').focus();
+                document.body.style.overflow = 'hidden';
+                window.scrollTo(0, 0);
+                const uInput = document.getElementById('userInput');
+                if (uInput) uInput.focus();
             }, 500);
         } else {
             errorMsg.style.display = 'block';
@@ -745,6 +752,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // --- Sidebar Mobile Toggle Logic ---
+    const chatSidebarToggleBtn = document.getElementById('chatSidebarToggleBtn');
+    const sidebarElement = document.querySelector('.sidebar');
+    if (chatSidebarToggleBtn && sidebarElement) {
+        chatSidebarToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebarElement.classList.toggle('active');
+        });
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && sidebarElement.classList.contains('active')) {
+                if (!sidebarElement.contains(e.target) && !chatSidebarToggleBtn.contains(e.target)) {
+                    sidebarElement.classList.remove('active');
+                }
+            }
+        });
+    }
 
     // --- Search Button Logic ---
     const searchBtn = document.querySelector('.icon-btn i.fa-magnifying-glass');
