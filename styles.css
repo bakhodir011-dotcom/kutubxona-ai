@@ -1219,12 +1219,12 @@ input:checked + .slider:before {
     padding: 90px 20px;
     width: 100%;
     color: #fff;
-    background-color: rgba(3, 10, 7, 0.88);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(3, 10, 7, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     position: relative;
     z-index: 2;
-    border-top: 1px solid rgba(16, 185, 129, 0.12);
+    border-top: 1px solid rgba(16, 185, 129, 0.15);
     scroll-margin-top: 85px;
 }
 
@@ -1236,8 +1236,10 @@ input:checked + .slider:before {
 /* Governor Section */
 .governor-section {
     padding-top: 100px;
-    background: linear-gradient(180deg, rgba(3, 7, 6, 0.65) 0%, rgba(3, 10, 7, 0.88) 15%, rgba(3, 10, 7, 0.94) 100%);
-    border-top: none;
+    background: linear-gradient(180deg, rgba(3, 7, 6, 0.1) 0%, rgba(3, 10, 7, 0.25) 35%, rgba(3, 10, 7, 0.35) 100%);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(16, 185, 129, 0.15);
 }
 .gov-header {
     margin-bottom: 40px;
@@ -1249,24 +1251,28 @@ input:checked + .slider:before {
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 15px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 .gov-title {
     font-size: 3.5rem;
     line-height: 1.1;
     margin-bottom: 10px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
 }
 .highlight {
     color: #10b981;
 }
 .gov-role {
     font-size: 1.2rem;
-    color: #a1a1aa;
+    color: #cbd5e1;
     margin-bottom: 25px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 .gov-desc {
     font-size: 1.1rem;
     line-height: 1.6;
     color: #e2e8f0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 .gov-gallery {
     display: grid;
@@ -1276,9 +1282,12 @@ input:checked + .slider:before {
     margin-bottom: 50px;
 }
 .gov-img {
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.55);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    backdrop-filter: blur(4px);
+    background: rgba(4, 12, 8, 0.4);
 }
 .gov-img img {
     width: 100%;
@@ -1316,9 +1325,16 @@ input:checked + .slider:before {
 }
 .gov-quote {
     flex: 1;
-    font-size: 1.5rem;
+    font-size: 1.45rem;
     font-style: italic;
     line-height: 1.5;
+    background: rgba(4, 15, 10, 0.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 .gov-quote i {
     color: #10b981;
@@ -1329,7 +1345,7 @@ input:checked + .slider:before {
     margin-top: 20px;
     font-size: 1rem;
     font-style: normal;
-    color: #a1a1aa;
+    color: #cbd5e1;
 }
 .quote-author strong {
     color: #fff;
@@ -1339,12 +1355,24 @@ input:checked + .slider:before {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
 }
 .stat-item {
     display: flex;
     align-items: center;
     gap: 20px;
+    background: rgba(4, 15, 10, 0.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 14px;
+    padding: 16px 22px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.stat-item:hover {
+    transform: translateX(4px);
+    border-color: rgba(16, 185, 129, 0.4);
 }
 .stat-icon {
     width: 50px;
@@ -1356,25 +1384,30 @@ input:checked + .slider:before {
     justify-content: center;
     font-size: 1.2rem;
     color: #052615;
+    flex-shrink: 0;
 }
 
 .gov-cta {
-    background-color: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(4, 15, 10, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(16, 185, 129, 0.25);
     border-radius: 20px;
     padding: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 .cta-text h3 {
     font-size: 2.5rem;
     margin-bottom: 15px;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
 }
 .cta-text p {
     font-size: 1.1rem;
-    color: #a1a1aa;
+    color: #cbd5e1;
     max-width: 500px;
     line-height: 1.6;
 }
@@ -1397,41 +1430,46 @@ input:checked + .slider:before {
     margin-bottom: 10px;
 }
 .learn-more-btn {
-    background-color: #10b981;
-    color: #052615;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 30px;
-    font-size: 1.1rem;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    padding: 15px 32px;
+    border-radius: 9999px;
+    font-size: 1.05rem;
     font-weight: 700;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     align-items: center;
     gap: 10px;
+    box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35);
 }
 .learn-more-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
 }
 
 /* Mission Section */
 .mission-section {
-    background: linear-gradient(135deg, rgba(5, 38, 21, 0.95), rgba(9, 59, 33, 0.85));
-    padding: 80px 0;
+    background: rgba(3, 10, 7, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 90px 0;
     text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.05);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(16, 185, 129, 0.15);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.15);
     margin: 40px 0;
 }
 .mission-content {
     max-width: 800px;
     margin: 0 auto;
-    padding: 40px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    backdrop-filter: blur(10px);
+    padding: 44px;
+    background: rgba(4, 15, 10, 0.5);
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(16, 185, 129, 0.25);
 }
 .mission-icon {
     font-size: 3rem;
@@ -1555,12 +1593,22 @@ input:checked + .slider:before {
 
 /* Contact Section */
 .contact-section {
-    padding: 80px 0 120px;
+    padding: 80px 20px 120px;
     text-align: center;
+    background: rgba(3, 10, 7, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 }
 .contact-content {
-    max-width: 600px;
+    max-width: 640px;
     margin: 0 auto;
+    padding: 40px 30px;
+    background: rgba(4, 15, 10, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 .contact-title {
     font-size: 2.5rem;
