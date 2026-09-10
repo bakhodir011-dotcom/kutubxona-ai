@@ -35,6 +35,16 @@ SYSTEM_INSTRUCTION = (
     "You must always be helpful, friendly, and informative. When a user asks in a specific language "
     "(e.g., Uzbek, Russian, or English), you must respond in that same language.\n\n"
     "SPECIAL INSTITUTIONAL KNOWLEDGE:\n"
+    "- If a user or candidate asks about the FOUNDERS or TEAM of Kutubxona AI (Behruz Xasanov, Asadbek Ilhomjonov, Bahodir Xurramov, Muhammadxon Soliev):\n"
+    "  * You MUST ALWAYS clearly and explicitly state that this person is the FOUNDER (asoschisi) of Kutubxona AI (Smart Library AI Lab).\n"
+    "  * Behruz Xasanov (Behruz Hasanov): Co-Founder of Kutubxona AI and Chief Technology Officer (CTO - AI & RAG Architecture). "
+    "He leads artificial intelligence engineering, RAG pipelines, model fine-tuning, and semantic retrieval for the platform.\n"
+    "  * Asadbek Ilhomjonov: Co-Founder of Kutubxona AI and Chief Design Officer (CDO). "
+    "He designs the user experience (UX/UI), product aesthetics, brand identity, and interactive learning journeys.\n"
+    "  * Bahodir Xurramov (Bahodir Khurramov): Co-Founder of Kutubxona AI and Chief Technology Officer (CTO - Backend & Cloud Infrastructure). "
+    "He architects the backend servers, APIs, database scalability, and cybersecurity of Kutubxona AI.\n"
+    "  * Muhammadxon Soliev: Co-Founder & CEO of Kutubxona AI, leading overall strategy, government relations, and educational partnerships.\n"
+    "  * If asked generally about Kutubxona AI founders or creators ('Kutubxona AI asoschilari kim?'), present all 4 founders and their contributions.\n"
     "- If a user or candidate asks about Sherzod Shermatov (including spelling variations like Shermatocv, Sherzod Xotamovich Shermatov, etc.):\n"
     "  1. Introduce who he is: Minister of Digital Technologies of the Republic of Uzbekistan (formerly Minister of Public Education), "
     "a key leader advancing digitalization, IT Park, digital literacy, and modern education across Uzbekistan.\n"
@@ -62,7 +72,28 @@ async def chat_endpoint(request: ChatRequest):
         try:
             msg_lower = request.message.lower()
             prompt = request.message
-            if "shermat" in msg_lower or ("sherzod" in msg_lower and any(w in msg_lower for w in ["kim", "who", "кто", "qaysi", "haqida", "about", "о", "taniysizmi", "znayete", "know"])):
+            
+            # Founder queries detection
+            is_founder_query = any(k in msg_lower for k in [
+                "behruz", "hasanov", "xasanov",
+                "asadbek", "ilhomjon",
+                "bahodir", "xurram", "kurram",
+                "muhammadxon", "soliev", "soliyev",
+                "asoschi", "founder", "kim yaratgan", "kimlar yaratgan", "muallif"
+            ])
+
+            if is_founder_query:
+                prompt = (
+                    f"{request.message}\n\n"
+                    "[Context & Mandatory Instruction: The user is asking about a founder/creator or team of Kutubxona AI. "
+                    "You MUST explicitly identify the person as the FOUNDER (asoschisi) of Kutubxona AI (Smart Library AI Lab) and outline their role:\n"
+                    "- Behruz Xasanov: Co-Founder of Kutubxona AI, CTO (AI & RAG Architecture), leading AI core models, RAG search, and NLP.\n"
+                    "- Asadbek Ilhomjonov: Co-Founder of Kutubxona AI, CDO (Chief Design Officer), leading UI/UX design, student interface, and visual brand.\n"
+                    "- Bahodir Xurramov: Co-Founder of Kutubxona AI, CTO (Backend & Infrastructure Lead), leading high-load backend, databases, and security.\n"
+                    "- Muhammadxon Soliev: Co-Founder & CEO of Kutubxona AI, leading institutional partnerships and overall project vision.\n"
+                    "Always emphasize that this guy/person is the founder of Kutubxona AI. Respond fluently and respectfully in the user's language (Uzbek, Russian, or English).]"
+                )
+            elif "shermat" in msg_lower or ("sherzod" in msg_lower and any(w in msg_lower for w in ["kim", "who", "кто", "qaysi", "haqida", "about", "о", "taniysizmi", "znayete", "know"])):
                 prompt = (
                     f"{request.message}\n\n"
                     "[Context & Instruction: When answering about Sherzod Shermatov, explain who he is "

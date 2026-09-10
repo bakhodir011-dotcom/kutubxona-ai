@@ -631,8 +631,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const lowerQuery = (text || '').toLowerCase();
             const isShermatovQuery = lowerQuery.includes('shermat') || (lowerQuery.includes('sherzod') && (lowerQuery.includes('kim') || lowerQuery.includes('who') || lowerQuery.includes('кто')));
+            
+            // Founder query detection
+            const isBehruz = lowerQuery.includes('behruz') || lowerQuery.includes('hasanov') || lowerQuery.includes('xasanov');
+            const isAsadbek = lowerQuery.includes('asadbek') || lowerQuery.includes('ilhomjon') || lowerQuery.includes('ilxomjon');
+            const isBahodir = lowerQuery.includes('bahodir') || lowerQuery.includes('baxodir') || lowerQuery.includes('xurram') || lowerQuery.includes('kurram') || lowerQuery.includes('khurram');
+            const isMuhammadxon = lowerQuery.includes('muhammadxon') || lowerQuery.includes('muxammadxon') || lowerQuery.includes('soliev') || lowerQuery.includes('soliyev');
+            const isGeneralFounders = lowerQuery.includes('asoschi') || lowerQuery.includes('founder') || lowerQuery.includes('kim yaratgan') || lowerQuery.includes('kimlar yaratgan') || lowerQuery.includes('muallif');
+            const isFounderQuery = isBehruz || isAsadbek || isBahodir || isMuhammadxon || isGeneralFounders;
 
-            if (isShermatovQuery) {
+            if (isFounderQuery) {
+                let founderInfo = '';
+                if (isBehruz && !isAsadbek && !isBahodir) {
+                    if (currentLang === 'uz') {
+                        founderInfo = `<strong>Behruz Xasanov</strong> — <strong>Kutubxona AI asoschilaridan biri (Co-Founder)</strong> va Bosh texnologik direktori (CTO — AI & RAG Architecture).<br><br>💡 <strong>Faoliyati va hissasi:</strong><br>Behruz Xasanov Kutubxona AI platformasining sun'iy intellekt yadrosi, RAG (Retrieval-Augmented Generation) qidiruv arxitekturasi, neyron tarmoqlar integratsiyasi va o'zbek tili uchun moslashtirilgan NLP modellarini ishlab chiqishga rahbarlik qiladi. U yoshlar va talabalar uchun ta'limni shaxsiylashtiruvchi zamonaviy AI imkoniyatlarini yaratgan asoschilardan biridir.`;
+                    } else if (currentLang === 'ru') {
+                        founderInfo = `<strong>Бехруз Хасанов (Behruz Xasanov)</strong> — <strong>сооснователь (Co-Founder) Kutubxona AI</strong> и технический директор (CTO — AI & RAG Architecture).<br><br>💡 <strong>Деятельность и вклад:</strong><br>Бехруз руководит разработкой ядра искусственного интеллекта Kutubxona AI, архитектуры RAG (Retrieval-Augmented Generation), оптимизацией языковых моделей и интеграцией алгоритмов персонализированного обучения для школьников и студентов.`;
+                    } else {
+                        founderInfo = `<strong>Behruz Xasanov</strong> is a <strong>Co-Founder of Kutubxona AI</strong> and the Chief Technology Officer (CTO — AI & RAG Architecture).<br><br>💡 <strong>Role & Contributions:</strong><br>Behruz leads the artificial intelligence and machine learning engineering at Kutubxona AI, overseeing RAG (Retrieval-Augmented Generation) architectures, intelligent search pipelines, and natural language processing models tailored for students and digital education.`;
+                    }
+                } else if (isAsadbek && !isBehruz && !isBahodir) {
+                    if (currentLang === 'uz') {
+                        founderInfo = `<strong>Asadbek Ilhomjonov</strong> — <strong>Kutubxona AI asoschilaridan biri (Co-Founder)</strong> va Bosh dizayn direktori (Chief Design Officer — CDO).<br><br>🎨 <strong>Faoliyati va hissasi:</strong><br>Asadbek Ilhomjonov Kutubxona AI platformasining barcha vizual dizayni, foydalanuvchi tajribasi (UI/UX), interaktiv o'quv interfeyslari hamda brend estetikasini yaratgan. U platformaning talabalar va o'quvchilar uchun qulay, jozibali va intuitiv bo'lishini ta'minlaydi.`;
+                    } else if (currentLang === 'ru') {
+                        founderInfo = `<strong>Асадбек Илхомжонов (Asadbek Ilhomjonov)</strong> — <strong>сооснователь (Co-Founder) Kutubxona AI</strong> и главный директор по дизайну (Chief Design Officer — CDO).<br><br>🎨 <strong>Деятельность и вклад:</strong><br>Асадбек отвечает за продуктовый и интерфейсный дизайн (UI/UX), визуальную эстетику бренда и пользовательский опыт Kutubxona AI, создавая интерактивную и удобную среду для обучения.`;
+                    } else {
+                        founderInfo = `<strong>Asadbek Ilhomjonov</strong> is a <strong>Co-Founder of Kutubxona AI</strong> and the Chief Design Officer (CDO).<br><br>🎨 <strong>Role & Contributions:</strong><br>Asadbek is the creative mind behind Kutubxona AI's product design, user interface (UI/UX), visual brand identity, and interactive learning workflows, ensuring an intuitive and engaging experience for students and educators.`;
+                    }
+                } else if (isBahodir && !isBehruz && !isAsadbek) {
+                    if (currentLang === 'uz') {
+                        founderInfo = `<strong>Bahodir Xurramov</strong> — <strong>Kutubxona AI asoschilaridan biri (Co-Founder)</strong> va Bosh texnologik direktori (CTO — Backend & Infrastructure Lead).<br><br>⚙️ <strong>Faoliyati va hissasi:</strong><br>Bahodir Xurramov Kutubxona AI platformasining yuqori yuklamalarga chidamli backend tizimi, ma'lumotlar bazasi arxitekturasi, xavfsizlik va bulutli (cloud) infratuzilmasini loyihalashtirgan hamda boshqaradi. U tizimning uzluksiz va tezkor ishlashini ta'minlaydi.`;
+                    } else if (currentLang === 'ru') {
+                        founderInfo = `<strong>Баходир Хуррамов (Bahodir Xurramov)</strong> — <strong>сооснователь (Co-Founder) Kutubxona AI</strong> и технический директор по серверной инфраструктуре (CTO — Backend & Infrastructure Lead).<br><br>⚙️ <strong>Деятельность и вклад:</strong><br>Баходир отвечает за высоконагруженную серверную часть (backend), архитектуру баз данных, облачную инфраструктуру и кибербезопасность платформы Kutubxona AI, гарантируя бесперебойную и надежную работу сервиса.`;
+                    } else {
+                        founderInfo = `<strong>Bahodir Xurramov</strong> is a <strong>Co-Founder of Kutubxona AI</strong> and the Chief Technology Officer (CTO — Backend & Infrastructure Lead).<br><br>⚙️ <strong>Role & Contributions:</strong><br>Bahodir engineers the high-performance backend architecture, secure database layers, cloud infrastructure, and API ecosystem powering Kutubxona AI, ensuring high availability, speed, and platform security.`;
+                    }
+                } else if (isMuhammadxon && !isBehruz && !isAsadbek && !isBahodir) {
+                    if (currentLang === 'uz') {
+                        founderInfo = `<strong>Muhammadxon Soliev</strong> — <strong>Kutubxona AI asoschilaridan biri (Co-Founder)</strong> va Bosh ijrochi direktori (CEO).<br><br>🚀 <strong>Faoliyati va hissasi:</strong><br>Muhammadxon Soliev loyihaning umumiy strategik rivoji, davlat va ta'lim muassasalari bilan hamkorlik, investitsiyalar va ta'lim texnologiyalarini kengaytirish ishlariga rahbarlik qiladi.`;
+                    } else if (currentLang === 'ru') {
+                        founderInfo = `<strong>Мухаммадхон Солиев (Muhammadxon Soliev)</strong> — <strong>сооснователь (Co-Founder) Kutubxona AI</strong> и генеральный директор (CEO).<br><br>🚀 <strong>Деятельность и вклад:</strong><br>Мухаммадхон руководит стратегическим развитием проекта, институциональными партнерствами и внедрением Kutubxona AI в образовательную систему.`;
+                    } else {
+                        founderInfo = `<strong>Muhammadxon Soliev</strong> is a <strong>Co-Founder and CEO of Kutubxona AI</strong>.<br><br>🚀 <strong>Role & Contributions:</strong><br>Muhammadxon oversees strategic vision, educational partnerships, growth initiatives, and ecosystem expansion for Kutubxona AI.`;
+                    }
+                } else {
+                    // General founders list
+                    if (currentLang === 'uz') {
+                        founderInfo = `🏛️ <strong>Kutubxona AI (Smart Library AI Lab) asoschilari jamoasi:</strong><br><br>• <strong>Behruz Xasanov</strong> — Co-Founder & CTO (AI & RAG Architecture)<br>• <strong>Asadbek Ilhomjonov</strong> — Co-Founder & CDO (Chief Design Officer, UI/UX Lead)<br>• <strong>Bahodir Xurramov</strong> — Co-Founder & CTO (Backend & Cloud Infrastructure Lead)<br>• <strong>Muhammadxon Soliev</strong> — Co-Founder & CEO (Executive & Strategic Vision)<br><br>Ushbu jamoa O'zbekiston yoshlari va talabalariga sun'iy intellekt orqali shaxsiylashtirilgan ta'lim berish va raqamli kutubxona tizimini yaratish maqsadida Kutubxona AI loyihasini asos solgan.`;
+                    } else if (currentLang === 'ru') {
+                        founderInfo = `🏛️ <strong>Команда основателей Kutubxona AI (Smart Library AI Lab):</strong><br><br>• <strong>Бехруз Хасанов (Behruz Xasanov)</strong> — Co-Founder & CTO (AI & RAG Architecture)<br>• <strong>Асадбек Илхомжонов (Asadbek Ilhomjonov)</strong> — Co-Founder & CDO (Chief Design Officer, UI/UX Lead)<br>• <strong>Баходир Хуррамов (Bahodir Xurramov)</strong> — Co-Founder & CTO (Backend & Cloud Infrastructure Lead)<br>• <strong>Мухаммадхон Солиев (Muhammadxon Soliev)</strong> — Co-Founder & CEO (Executive & Strategic Vision)<br><br>Команда создала Kutubxona AI с целью предоставить молодежи и студентам Узбекистана передовые инструменты персонализированного обучения на базе искусственного интеллекта.`;
+                    } else {
+                        founderInfo = `🏛️ <strong>Founders of Kutubxona AI (Smart Library AI Lab):</strong><br><br>• <strong>Behruz Xasanov</strong> — Co-Founder & CTO (AI & RAG Architecture)<br>• <strong>Asadbek Ilhomjonov</strong> — Co-Founder & CDO (Chief Design Officer, UI/UX Lead)<br>• <strong>Bahodir Xurramov</strong> — Co-Founder & CTO (Backend & Cloud Infrastructure Lead)<br>• <strong>Muhammadxon Soliev</strong> — Co-Founder & CEO (Executive & Strategic Vision)<br><br>Together, this team founded Kutubxona AI to empower students and learners in Uzbekistan with state-of-the-art AI tutoring and digital library intelligence.`;
+                    }
+                }
+
+                const aiMsg = createMessageElement(founderInfo, false);
+                chatMessages.appendChild(aiMsg);
+                currentSession.messages.push({ role: 'ai', content: founderInfo });
+                saveSession();
+
+                // Save fallback query into Admin Logs
+                AdminLogManager.saveLog(text, founderInfo, currentLang, currentSessionId);
+            } else if (isShermatovQuery) {
                 let shermatovInfo = '';
                 if (currentLang === 'uz') {
                     shermatovInfo = `<strong>Sherzod Xotamovich Shermatov</strong> — O'zbekiston Respublikasi Raqamli texnologiyalar vaziri (avval Xalq ta'limi vaziri lavozimida faoliyat yuritgan). U mamlakatimizda raqamli transformatsiya, IT sohasini rivojlantirish va yoshlar uchun IT-ta'lim imkoniyatlarini kengaytirishda muhim yetakchidir.<br><br>🏛️ <strong>Kutubxona AI bilan bog'liqligi:</strong><br>Hurmatli <strong>Sherzod Shermatov bizning Kutubxona AI laboratoriyamizga (Smart Library AI Lab) shaxsan tashrif buyurgan</strong>. Ushbu tashrif chog'ida biz unga sun'iy intellektga asoslangan ta'lim platformamizni, raqamli kutubxona tizimini hamda yoshlar va talabalar uchun yaratilgan innovatsion imkoniyatlarni namoyish etdik va u loyihamizni katta qiziqish bilan qo'llab-quvvatladi.`;
@@ -891,17 +951,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const uniqueSessions = new Set(logs.map(l => l.session_id)).size;
 
         let shermatovCount = 0;
+        let foundersCount = 0;
         let ieltsCount = 0;
         let satCount = 0;
         logs.forEach(l => {
             const q = (l.user_query || '').toLowerCase();
             if (q.includes('shermat') || q.includes('sherzod')) shermatovCount++;
+            if (q.includes('behruz') || q.includes('xasanov') || q.includes('hasanov') || q.includes('asadbek') || q.includes('ilhom') || q.includes('bahodir') || q.includes('xurram') || q.includes('kurram') || q.includes('muhammadxon') || q.includes('soliev') || q.includes('asoschi') || q.includes('founder')) foundersCount++;
             if (q.includes('ielts')) ieltsCount++;
             if (q.includes('sat')) satCount++;
         });
-        let topTopic = 'Sherzod Shermatov';
-        if (ieltsCount > shermatovCount && ieltsCount > satCount) topTopic = 'IELTS Prep';
-        else if (satCount > shermatovCount && satCount > ieltsCount) topTopic = 'SAT Prep';
+        let topTopic = 'Founders & Team';
+        const maxTopicCount = Math.max(foundersCount, shermatovCount, ieltsCount, satCount);
+        if (maxTopicCount === 0) topTopic = 'General Q&A';
+        else if (maxTopicCount === shermatovCount) topTopic = 'Sherzod Shermatov';
+        else if (maxTopicCount === foundersCount) topTopic = 'Founders & Team';
+        else if (maxTopicCount === ieltsCount) topTopic = 'IELTS Prep';
+        else if (maxTopicCount === satCount) topTopic = 'SAT Prep';
 
         const statTotalElem = document.getElementById('statTotalQueries');
         const statTodayElem = document.getElementById('statTodayQueries');
