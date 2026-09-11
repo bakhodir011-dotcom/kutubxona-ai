@@ -255,6 +255,12 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
+        // Close menu when any nav link is clicked (e.g. About external link)
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
     }
 
     // Smooth automated scrolling for all navigation anchors (Home, About, Our Mission, Projects, Contact, Scroll Hint)
