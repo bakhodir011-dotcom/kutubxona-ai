@@ -1,0 +1,32 @@
+{
+  "name": "Kutubxona AI",
+  "short_name": "Kutubxona AI",
+  "description": "O'zbekistondagi zamonaviy sun'iy intellekt ta'lim platformasi",
+  "icons": [
+    {
+      "src": "/favicon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "theme_color": "#10B981",
+  "background_color": "#030706",
+  "display": "standalone",
+  "start_url": "/"
+}
