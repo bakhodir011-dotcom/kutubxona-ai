@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const header = document.querySelector('.site-header');
                     const headerHeight = header ? header.offsetHeight : 80;
                     
-                    if (targetId === '#heroSection') {
+                    if (targetId === '#heroSection' || (targetId === '#governorSection' && this.getAttribute('data-i18n') === 'navHome')) {
                         window.scrollTo({
                             top: 0,
                             behavior: 'smooth'

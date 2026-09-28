@@ -1288,11 +1288,10 @@ input:checked + .slider:before {
 
 /* Governor Section */
 .governor-section {
-    padding-top: 100px;
+    padding-top: 120px;
     background: linear-gradient(180deg, rgba(3, 7, 6, 0.1) 0%, rgba(3, 10, 7, 0.25) 35%, rgba(3, 10, 7, 0.35) 100%);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    border-top: 1px solid rgba(16, 185, 129, 0.15);
 }
 .gov-header {
     margin-bottom: 40px;
