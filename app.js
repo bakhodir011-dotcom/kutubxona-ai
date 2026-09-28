@@ -13,7 +13,7 @@ const translations = {
         govTag: "A STEP TOWARDS A SMARTER SAMARKAND",
         govTitle: 'Meeting with<br><span class="highlight">Adiz Boboyev</span>',
         govRole: "Governor of Samarkand Region",
-        govDesc: "We had the honor of presenting Kutubxona AI to Mr. Adiz Boboyev, Governor of Samarkand Region, sharing our vision for how artificial intelligence can expand access to quality education and create new opportunities for the youth of our region.",
+        govDesc: "Samarkand's first artificial intelligence laboratory, Kutubxona AI, was created in partnership with the Ministry of Digital Technologies and a team led by American expert Vincent Rossa.",
         govQuote: '“Investing <span class="highlight">in education</span> and innovative technologies is an investment in the future of our youth and our region.”',
         govQuoteAuthor: '<strong>Adiz Boboyev</strong><br>Governor of Samarkand Region',
         govStat1: "Greater opportunities<br>for students",
@@ -74,7 +74,7 @@ const translations = {
         govTag: "SAMARQANDNI YANADA AQL-IDROKLI QILISH SARI QADAM",
         govTitle: 'Uchrashuv:<br><span class="highlight">Adiz Boboyev</span>',
         govRole: "Samarqand viloyati hokimi",
-        govDesc: "Biz Kutubxona AIni Samarqand viloyati hokimi Adiz Boboyev janoblariga taqdim etish hamda sun'iy intellekt sifatli ta'lim olish imkoniyatlarini qanday kengaytirishi va mintaqamiz yoshlari uchun yangi imkoniyatlar yaratishi haqidagi tasavvurimiz bilan o'rtoqlashish sharafiga muyassar bo'ldik.",
+        govDesc: "Samarqanddagi birinchi sun'iy intellekt laboratoriyasi — Kutubxona AI Raqamli texnologiyalar vazirligi va amerikalik ekspert Vincent Rossa boshchiligidagi jamoa bilan yaratilgan.",
         govQuote: "“<span class=\"highlight\">Ta'limga</span> va innovatsion texnologiyalarga sarmoya kiritish - bu yoshlarimiz va mintaqamiz kelajagiga sarmoyadir.”",
         govQuoteAuthor: "<strong>Adiz Boboyev</strong><br>Samarqand viloyati hokimi",
         govStat1: "O'quvchilar uchun<br>katta imkoniyatlar",
@@ -135,7 +135,7 @@ const translations = {
         govTag: "ШАГ К БОЛЕЕ УМНОМУ САМАРКАНДУ",
         govTitle: 'Встреча с<br><span class="highlight">Адизом Бобоевым</span>',
         govRole: "Хоким Самаркандской области",
-        govDesc: "Мы имели честь представить Kutubxona AI господину Адизу Бобоеву, хокиму Самаркандской области, поделившись нашим видением того, как искусственный интеллект может расширить доступ к качественному образованию и создать новые возможности для молодежи нашего региона.",
+        govDesc: "Первая лаборатория искусственного интеллекта в Самарканде — Kutubxona AI — создана совместно с Министерством цифровых технологий и командой под руководством американского эксперта Винсента Росса.",
         govQuote: "“Инвестиции <span class=\"highlight\">в образование</span> и инновационные технологии — это инвестиции в будущее нашей молодежи и нашего региона.”",
         govQuoteAuthor: "<strong>Адиз Бобоев</strong><br>Хоким Самаркандской области",
         govStat1: "Широкие возможности<br>для студентов",
@@ -637,6 +637,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const lowerQuery = (text || '').toLowerCase();
             const isShermatovQuery = lowerQuery.includes('shermat') || (lowerQuery.includes('sherzod') && (lowerQuery.includes('kim') || lowerQuery.includes('who') || lowerQuery.includes('кто')));
+            const isVincentQuery = lowerQuery.includes('vincent') || lowerQuery.includes('rossa') || lowerQuery.includes('vinsent');
             
             // Founder query detection
             const isBehruz = lowerQuery.includes('behruz') || lowerQuery.includes('hasanov') || lowerQuery.includes('xasanov');
@@ -714,6 +715,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Save fallback query into Admin Logs
                 AdminLogManager.saveLog(text, shermatovInfo, currentLang, currentSessionId);
+            } else if (isVincentQuery) {
+                let vincentInfo = '';
+                if (currentLang === 'uz') {
+                    vincentInfo = `🏛️ <strong>Kutubxona AI haqida:</strong><br><br>Samarqanddagi birinchi sun'iy intellekt laboratoriyasi — <strong>Kutubxona AI</strong> Raqamli texnologiyalar vazirligi va amerikalik ekspert <strong>Vincent Rossa</strong> boshchiligidagi jamoa bilan birgalikda yaratilgan.`;
+                } else if (currentLang === 'ru') {
+                    vincentInfo = `🏛️ <strong>О лаборатории Kutubxona AI:</strong><br><br>Первая лаборатория искусственного интеллекта в Самарканде — <strong>Kutubxona AI</strong> — создана совместно с Министерством цифровых технологий и командой под руководством американского эксперта <strong>Винсента Росса (Vincent Rossa)</strong>.`;
+                } else {
+                    vincentInfo = `🏛️ <strong>About Kutubxona AI:</strong><br><br>Samarkand's first artificial intelligence laboratory, <strong>Kutubxona AI</strong>, was created in partnership with the Ministry of Digital Technologies and a team led by American expert <strong>Vincent Rossa</strong>.`;
+                }
+                const aiMsg = createMessageElement(vincentInfo, false);
+                chatMessages.appendChild(aiMsg);
+                currentSession.messages.push({ role: 'ai', content: vincentInfo });
+                saveSession();
+
+                AdminLogManager.saveLog(text, vincentInfo, currentLang, currentSessionId);
             } else {
                 const errorMsg = createMessageElement('Kechirasiz, tizimga ulanishda xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko\'ring.', false);
                 chatMessages.appendChild(errorMsg);
