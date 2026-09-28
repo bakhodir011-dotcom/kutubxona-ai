@@ -10,9 +10,9 @@ const translations = {
         heroTitle: "AI Laboratory for<br>Education",
         heroSubtitle: "Unlocking world-class knowledge, exam prep, and interactive study tools for everyone",
         heroBtnDiscuss: "Start Learning",
-        govTag: "A STEP TOWARDS A SMARTER SAMARKAND",
-        govTitle: 'Meeting with<br><span class="highlight">Adiz Boboyev</span>',
-        govRole: "Governor of Samarkand Region",
+        govTag: "FIRST AI LABORATORY IN SAMARKAND",
+        govTitle: 'First Artificial Intelligence<br><span class="highlight">Laboratory in Samarkand</span>',
+        govRole: "",
         govDesc: "Samarkand's first artificial intelligence laboratory, Kutubxona AI, was created in partnership with the Ministry of Digital Technologies and a team led by American expert Vincent Rossa.",
         govQuote: '“Investing <span class="highlight">in education</span> and innovative technologies is an investment in the future of our youth and our region.”',
         govQuoteAuthor: '<strong>Adiz Boboyev</strong><br>Governor of Samarkand Region',
@@ -71,10 +71,10 @@ const translations = {
         heroTitle: "Ta'lim uchun<br>AI Laboratoriyasi",
         heroSubtitle: "Har bir o'quvchi uchun jahon andozalaridagi bilimlar, imtihonlarga tayyorgarlik va interaktiv ta'lim vositalari",
         heroBtnDiscuss: "O'rganishni boshlash",
-        govTag: "SAMARQANDNI YANADA AQL-IDROKLI QILISH SARI QADAM",
-        govTitle: 'Uchrashuv:<br><span class="highlight">Adiz Boboyev</span>',
-        govRole: "Samarqand viloyati hokimi",
-        govDesc: "Samarqanddagi birinchi sun'iy intellekt laboratoriyasi — Kutubxona AI Raqamli texnologiyalar vazirligi va amerikalik ekspert Vincent Rossa boshchiligidagi jamoa bilan yaratilgan.",
+        govTag: "SAMARQANDDAGI BIRINCHI SUN'IY INTELLEKT LABORATORIYASI",
+        govTitle: 'Samarqanddagi birinchi<br><span class="highlight">sun\'iy intellekt laboratoriyasi</span>',
+        govRole: "",
+        govDesc: "Samarqanddagi birinchi sun'iy intellekt laboratoriyasi Kutubxona AI Raqamli texnologiyalar vazirligi va amerikalik ekspert Vincent Rossa boshchiligidagi jamoa bilan yaratilgan.",
         govQuote: "“<span class=\"highlight\">Ta'limga</span> va innovatsion texnologiyalarga sarmoya kiritish - bu yoshlarimiz va mintaqamiz kelajagiga sarmoyadir.”",
         govQuoteAuthor: "<strong>Adiz Boboyev</strong><br>Samarqand viloyati hokimi",
         govStat1: "O'quvchilar uchun<br>katta imkoniyatlar",
@@ -132,9 +132,9 @@ const translations = {
         heroTitle: "Лаборатория ИИ<br>для образования",
         heroSubtitle: "Открывая передовые знания, подготовку к экзаменам и интерактивные учебные инструменты для каждого",
         heroBtnDiscuss: "Начать обучение",
-        govTag: "ШАГ К БОЛЕЕ УМНОМУ САМАРКАНДУ",
-        govTitle: 'Встреча с<br><span class="highlight">Адизом Бобоевым</span>',
-        govRole: "Хоким Самаркандской области",
+        govTag: "ПЕРВАЯ ЛАБОРАТОРИЯ ИИ В САМАРКАНДЕ",
+        govTitle: 'Первая лаборатория<br><span class="highlight">искусственного интеллекта в Самарканде</span>',
+        govRole: "",
         govDesc: "Первая лаборатория искусственного интеллекта в Самарканде — Kutubxona AI — создана совместно с Министерством цифровых технологий и командой под руководством американского эксперта Винсента Росса.",
         govQuote: "“Инвестиции <span class=\"highlight\">в образование</span> и инновационные технологии — это инвестиции в будущее нашей молодежи и нашего региона.”",
         govQuoteAuthor: "<strong>Адиз Бобоев</strong><br>Хоким Самаркандской области",
@@ -185,7 +185,7 @@ const translations = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    let currentLang = 'en';
+    let currentLang = 'uz';
 
     // --- 3D Background Init ---
     let vantaEffect = null;
@@ -237,6 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
             updateLanguage(selectedLang);
         });
     });
+
+    // Initialize default language as Uzbek (UZ)
+    updateLanguage('uz');
 
     // --- Navigation Logic ---
     const siteHeader = document.querySelector('.site-header');
