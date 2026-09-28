@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pwd = (passwordInput.value || '').trim();
         const usr = usernameInput ? (usernameInput.value || '').trim() : '';
 
-        const isStandardSuccess = (currentRole === 'candidate' && pwd === 'kutubxona2026');
+        const isStandardSuccess = (currentRole === 'candidate' && (pwd === '0106' || pwd === 'kutubxona2026'));
         const isAdminExplicitSuccess = (currentRole === 'admin' && usr === 'admin' && pwd === 'admin2026');
         const isAdminQuickSuccess = (pwd === 'admin2026');
 
