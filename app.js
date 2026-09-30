@@ -7,9 +7,9 @@ const translations = {
         navContact: "Contact",
         navTryBtn: "Get Started",
         aiLabSub: "AI Laboratory of Education",
-        heroTitle: "AI Laboratory for<br>Education",
-        heroSubtitle: "Unlocking world-class knowledge, exam prep, and interactive study tools for everyone",
-        heroBtnDiscuss: "Start Learning",
+        heroTitle: 'Kutubxona <span class="highlight">AI</span>',
+        heroSubtitle: "Samarkand's first artificial intelligence laboratory — unlocking world-class knowledge, exam prep, and interactive study tools for everyone.",
+        heroBtnDiscuss: "Get Started",
         govTag: "FIRST AI LABORATORY IN SAMARKAND",
         govTitle: 'First Artificial Intelligence<br><span class="highlight">Laboratory in Samarkand</span>',
         govRole: "",
@@ -68,8 +68,8 @@ const translations = {
         navContact: "Aloqa",
         navTryBtn: "Boshlash",
         aiLabSub: "Ta'lim uchun AI laboratoriyasi",
-        heroTitle: "Ta'lim uchun<br>AI Laboratoriyasi",
-        heroSubtitle: "Har bir o'quvchi uchun jahon andozalaridagi bilimlar, imtihonlarga tayyorgarlik va interaktiv ta'lim vositalari",
+        heroTitle: 'Kutubxona <span class="highlight">AI</span>',
+        heroSubtitle: "Samarqanddagi birinchi sun'iy intellekt laboratoriyasi — har bir o'quvchi va talaba uchun jahon andozalaridagi bilimlar, imtihonlarga tayyorgarlik va interaktiv ta'lim vositalari.",
         heroBtnDiscuss: "O'rganishni boshlash",
         govTag: "SAMARQANDDAGI BIRINCHI SUN'IY INTELLEKT LABORATORIYASI",
         govTitle: 'Samarqanddagi birinchi<br><span class="highlight">sun\'iy intellekt laboratoriyasi</span>',
@@ -129,8 +129,8 @@ const translations = {
         navContact: "Контакты",
         navTryBtn: "Начать",
         aiLabSub: "Лаборатория ИИ для образования",
-        heroTitle: "Лаборатория ИИ<br>для образования",
-        heroSubtitle: "Открывая передовые знания, подготовку к экзаменам и интерактивные учебные инструменты для каждого",
+        heroTitle: 'Kutubxona <span class="highlight">AI</span>',
+        heroSubtitle: "Первая лаборатория искусственного интеллекта в Самарканде — передовые знания, подготовка к экзаменам и интерактивное обучение для каждого.",
         heroBtnDiscuss: "Начать обучение",
         govTag: "ПЕРВАЯ ЛАБОРАТОРИЯ ИИ В САМАРКАНДЕ",
         govTitle: 'Первая лаборатория<br><span class="highlight">искусственного интеллекта в Самарканде</span>',
@@ -226,6 +226,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('[data-i18n-title]').forEach(el => {
             const key = el.getAttribute('data-i18n-title');
             if (dict[key]) el.title = dict[key];
+        });
+
+        document.querySelectorAll('.lang-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-lang') === lang);
         });
     };
 
@@ -1106,5 +1110,5 @@ document.addEventListener('DOMContentLoaded', () => {
     if (adminLangFilter) adminLangFilter.addEventListener('change', renderAdminDashboard);
 
     // Initialize default language
-    updateLanguage('en');
+    updateLanguage('uz');
 });
